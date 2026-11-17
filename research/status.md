@@ -17,9 +17,10 @@
 | Establish SSH access | Complete | Normal booted system; root shell |
 | Locate kernelcache | Complete | iOS kernelcache directory |
 | Download kernelcache to Mac | Complete | ~/Desktop/iPad3-Research/kernelcache |
-| Preliminary IMG3 identification | Preliminary | Leading bytes consistent with IMG3 magic |
-| Inspect first 256 bytes and decode header / initial tags | Complete | Header fields, TYPE and DATA tag headers decoded |
-| Validate every IMG3 tag boundary | Pending | Need local parser and file-size consistency check |
+| IMG3 container identification | Complete | Magic, header, and tags parsed |
+| Validate every IMG3 tag boundary | Complete | All bytes accounted for; parser ended at exact file size |
+| Record observed tag sequence | Complete | TYPE, DATA, SEPO, KBAG, KBAG |
+| Inspect first 256 bytes and decode header / initial tags | Complete | Header fields and initial tags decoded |
 | Record kernelcache SHA-256 | Complete | `232caa3bfe34ff0ba841dd7c1e3a918aafd1b4376ead82f66f292c8d49d4021e` |
 | Determine payload encoding/compression | Pending | Not established |
 | Extract kernel to separate file | Pending | Must not overwrite source |
@@ -34,19 +35,25 @@
 
 ## Immediate next step
 
-Run a read-only Python parser on the **Mac** to enumerate all IMG3 tags and validate their lengths against the file size. The 256-byte header dump and SHA-256 fingerprint are already recorded in `research/kernelcache.md`.
+Run a read-only Python check on the **Mac** to decode the first two 32-bit fields (`cryptState` and `aesType`) in each KBAG and the four-byte SEPO value. Do not print the rest of the KBAG data, which contains encrypted IV/key material.
 
 ## Following steps
-1. Validate all IMG3 tag boundaries and file-size consistency.
+1. Inspect KBAG metadata fields and SEPO value.
 2. Determine how the payload is stored and whether it is compressed.
-3. Select a safe extraction tool or method for macOS.
-4. Extract to a new file and verify its format.
+3. Select a safe local inspection/extraction method.
+4. Verify whether extracted data is a Mach-O ARMv7 kernel.
 5. Inspect Mach-O metadata.
 6. Find a suitable iOS 10 32-bit comparison kernel and record its provenance.
 7. Compare kernel and platform characteristics.
 8. Reassess feasibility before considering any device-side experiment.
 
 ## Change log
+
+### 2026-11-17 — IMG3 tag validation
+- Parsed the complete IMG3 tag sequence: TYPE, DATA, SEPO, KBAG, KBAG.
+- Confirmed every tag length is in bounds and the final offset exactly equals the 10,673,292-byte file size.
+- Recorded two KBAG sections, each with 56 bytes of data; AES key size remains unconfirmed until the `aesType` fields are read.
+- No extraction or device-side changes were made.
 
 ### 2026-11-17 — Kernelcache header inspection
 - Inspected the first 256 bytes of the copied kernelcache on the Mac.
