@@ -58,6 +58,13 @@ Determine the DATA payload's encoding and whether it is compressed. Select a saf
 
 ## Change log
 
+### 2026-11-17 — Format-focused review and reproducibility check
+- Recomputed the local artifact SHA-256; it matches the recorded `232caa3bfe34ff0ba841dd7c1e3a918aafd1b4376ead82f66f292c8d49d4021e`.
+- Measured exactly the declared DATA range: 10,673,026 bytes, remainder 2 modulo 16, 256 distinct byte values, and 7.999983875583 bits/byte Shannon entropy.
+- Added source-linked IMG3/KBAG format references and clarified that `aesType=0x100` identifies the KBAG AES-256 key-size type, not a mode, key, or decryption result.
+- Reclassified “production/development GID-key state” labels for `cryptState=0x1/0x2` as unsupported; retain the raw values only.
+- No decryption, decompression, extraction, boot experiment, device-side action, or overwrite was performed.
+
 ### 2026-11-17 — KBAG and SEPO metadata inspection
 - Read the four-byte SEPO value: `16`.
 - Read the first two 32-bit fields of both KBAG entries without printing encrypted IV/key bytes.
