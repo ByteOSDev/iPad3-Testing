@@ -24,7 +24,7 @@ Status meanings: Complete = reproduced and documented. Partial = meaningful evid
 | 13 | Compare device-tree metadata | Complete | Donor CHIP 0x8955, no KBAG; target CHIP 0x8945, two KBAGs, and different DATA characteristics. |
 | 14 | Compare manifest component metadata | Complete | Donor identities are P101/P102/P103; target identities are J1AP. Donor and target component metadata differ. |
 | 15 | Build compatibility matrix | Complete | Kernel, device tree, boot chain, display, WLAN, NAND, USB, and driver differences are documented in research/ios10-base-compatibility.md. |
-| 16 | Identify compatible iOS 10 userspace components | Partial | The donor is a usable iOS 10 reference, but no component-level target runtime test has been performed. |
+| 16 | Identify compatible iOS 10 userspace components | Partial | Donor system image is readable UDZO; target system image begins encrcdsa and remains uninspected without decryption. No runtime test has been performed. |
 | 17 | Obtain an A5X/J1AP iOS 10 kernel reference | Blocked | No genuine iOS 10 J1AP/A5X kernel reference has been established. The donor kernel is A6X/ARMv7s-oriented. |
 | 18 | Resolve signing/personalization requirements | Partial | Manifest and IMG3 signing relationships are understood at a high level; no signing keys, personalization, or bypass has been attempted. |
 | 19 | Create offline analysis bundles | Complete | Manifest-only and mixed-component bundles were created with explicit NONINSTALLABLE warnings. |
@@ -41,3 +41,7 @@ Status meanings: Complete = reproduced and documented. Partial = meaningful evid
 The static evidence demonstrates a real platform boundary: A5X/J1AP (0x8945) versus A6X/P101AP (0x8955), different boot-chain metadata, different device-tree encryption arrangements, and different prelinked kernel drivers. Further progress requires a target-compatible iOS 10 kernel/reference or source-level platform porting work. Blind archive edits cannot close these gaps.
 
 No decryption, signing-key recovery, device-side modification, restore, or boot experiment was performed.
+
+## Latest update — 2026-11-17
+
+The donor/target restore-image and system-image audit is documented in research/ios10-base-compatibility.md. The target filesystem image is encrypted, so further filesystem comparison requires an authorized decryption method or a separately obtained decrypted reference. No device-side action occurred.
