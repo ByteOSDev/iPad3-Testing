@@ -63,7 +63,7 @@ Output:
 
 The first four bytes are 33 67 6d 49, ASCII 3gmI. This is the little-endian representation of the IMG3 magic value.
 
-**Assessment:** IMG3 is a strong preliminary container identification based on the leading magic. The container header and tag records still need structural validation.
+**Assessment:** IMG3 identification is confirmed by the magic, valid header fields, and complete tag parsing. The parser walked every tag to the exact end of the file.
 
 ## Strings inspection
 
@@ -104,12 +104,31 @@ The 256-byte dump confirms the following initial IMG3 structure (all integer fie
 - First tag: `TYPE`, with a 4-byte value identifying `krnl`.
 - Next visible tag: `DATA`; its tag header reports total length `0x00a2db9c` and data length `0x00a2db82`.
 
-These values are decoded from the supplied hex dump using the IMG3 header/tag layout. A complete parser pass is still required to validate every tag boundary and the final file-size relationship. The DATA bytes shown in the dump appear non-textual; that alone does not establish whether they are encrypted, compressed, or both.
+These values are decoded from the supplied hex dump using the IMG3 header/tag layout. The subsequent parser pass validated every tag boundary and the final file-size relationship. The DATA bytes shown in the dump appear non-textual; that alone does not establish whether they are encrypted, compressed, or both.
+
+## Full IMG3 tag parse
+
+The user ran the parser on the **Mac**. It reported:
+
+~~~text
+TYPE     offset=0x00000014 total=0x00000020 data=0x00000004
+DATA     offset=0x00000034 total=0x00a2db9c data=0x00a2db82
+SEPO     offset=0x00a2dbd0 total=0x0000001c data=0x00000004
+KBAG     offset=0x00a2dbec total=0x0000004c data=0x00000038
+KBAG     offset=0x00a2dc38 total=0x00000054 data=0x00000038
+End offset: 0xa2dc8c
+File end:   0xa2dc8c
+All bytes accounted for: True
+~~~
+
+**Confirmed:** the tag parser reached the exact end of the 10,673,292-byte file. No gaps, overlaps, or out-of-bounds tag lengths were reported. The complete observed tag sequence is `TYPE`, `DATA`, `SEPO`, `KBAG`, `KBAG`; no `SHSH` or `CERT` tags were reported by this parser.
+
+`SEPO` is documented as the Security Epoch tag. Each `KBAG` has 56 bytes of tag data (`0x38`). The documented KBAG structure starts with two 32-bit fields (`cryptState` and `aesType`), followed by an encrypted IV and encrypted key. A 56-byte data area is consistent with the documented AES-256 keybag layout (8 bytes of fields + 16-byte IV + 32-byte key), but the two fields have not yet been read from this artifact. Do not claim AES-256 as confirmed until `aesType` is inspected. The existence of KBAG metadata indicates an encryption-related image format; it does not independently establish whether the DATA payload is additionally compressed.
 
 ## Not yet done
 - Inspect the first 256 bytes. — Complete
 - Record a SHA-256 digest. — Complete
-- Parse IMG3 header fields and tag boundaries. — Pending structural parser validation.
+- Parse and validate all IMG3 tag boundaries. — Complete
 - Identify payload and any compression format.
 - Extract the kernel to a separate file.
 - Verify whether the extracted object is a Mach-O ARMv7 kernel.
@@ -117,11 +136,11 @@ These values are decoded from the supplied hex dump using the IMG3 header/tag la
 
 ## Next read-only step
 
-Run a local parser on the Mac to enumerate and validate every IMG3 tag boundary. This can be done with Python using only the local file; it does not contact or modify the iPad. Do not extract or alter the source file until the parser output has been checked.
+Read only the first eight data bytes of each KBAG (the documented `cryptState` and `aesType` fields) and the four-byte SEPO value. Do not print the remaining KBAG bytes, which contain encrypted IV/key material. This can be done locally on the Mac and does not contact or modify the iPad.
 
 Do not overwrite the original kernelcache. Any extraction should write to a new path in ~/Desktop/iPad3-Research/.
 
 ## Interpretation cautions
-- Do not infer payload compression solely from IMG3 magic.
-- Do not assume a specific tag order or length until the header has been parsed.
+- Do not infer payload compression solely from IMG3 magic or KBAG presence.
+- The observed tag sequence is confirmed for this artifact; do not generalize it to every IMG3 image.
 - Do not treat successful extraction as proof that the kernel is boot-compatible with another iOS release.
