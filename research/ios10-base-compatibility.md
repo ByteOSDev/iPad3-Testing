@@ -318,3 +318,12 @@ The donor and target IPSWs contain different restore-image layouts:
 The donor's larger iOS 10 system image cannot be assumed to fit the target's iOS 9.3.5 partition layout. The donor and target also use different kernel/ramdisk platform keys and different restore-image mappings. This is a userspace/restore-layout compatibility concern in addition to the kernel and boot-chain mismatch.
 
 No DMG was mounted, modified, or installed. The next useful userspace step is offline filesystem inventory of copied DMGs, if a suitable read-only DMG inspection tool is available.
+## User system-image format audit (2026-11-17)
+
+Read-only disk-image inspection added another compatibility boundary:
+
+- Donor iOS 10.3.2 user image: UDZO, a compressed read-only disk image; hdiutil reported a GUID partition map and HFS+ partition metadata.
+- Target iOS 9.3.5 user image: begins with the binary marker `encrcdsa`; hdiutil could not inspect it as a normal disk image without decryption.
+- No image was mounted, decrypted, modified, or written back into either IPSW.
+
+This means userspace filesystem comparison is currently asymmetric: the donor image can be structurally inspected, but the target image remains encrypted. A safe next step would require an authorized, reproducible decryption method and a separately written output; no such method has been used here.
