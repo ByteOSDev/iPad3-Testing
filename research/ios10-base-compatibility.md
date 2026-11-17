@@ -327,3 +327,12 @@ Read-only disk-image inspection added another compatibility boundary:
 - No image was mounted, decrypted, modified, or written back into either IPSW.
 
 This means userspace filesystem comparison is currently asymmetric: the donor image can be structurally inspected, but the target image remains encrypted. A safe next step would require an authorized, reproducible decryption method and a separately written output; no such method has been used here.
+## Public A5X/J1AP kernel-reference survey (2026-11-17)
+
+A public-source survey found no iOS 10 restore IPSW or kernelcache identified for iPad3,1/J1AP. Public device references consistently list iPad3,1/A5X's latest compatible release as iOS 9.3.6, while iPad3,4/A6X has iOS 10.3.x releases:
+
+- [The Apple Wiki: iPad3,1](https://theapplewiki.com/wiki/IPad3%2C1)
+- [The Apple Wiki: iPad3,4/P101AP](https://theapplewiki.com/wiki/P101AP)
+- [IPSW firmware comparison](https://www.ipsw.io/blog/ipad-3-4-firmware)
+
+This is not a proof that a private or unreleased engineering kernel never existed. It does establish that the current public IPSW corpus does not supply the missing A5X/J1AP iOS 10 kernel reference. Milestone 17 remains blocked on that missing artifact or a source-level port.
