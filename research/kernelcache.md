@@ -206,3 +206,37 @@ No decompression, extraction, decryption, or device-side modification has been p
 ## Updated next step
 
 Do not try to decompress the invalid GZIP candidate. Continue with format-aware IMG3/kernelcache research and identify a known, auditable parser that understands this Apple kernelcache generation. Any eventual extraction must write to a new file and preserve the original. Do not infer that the DATA payload is plain compressed data from isolated byte signatures.
+
+## Format-focused review and reproducibility check (2026-11-17)
+
+This review was read-only. The original local artifact was not changed. A fresh SHA-256 calculation returned the recorded digest:
+
+~~~text
+232caa3bfe34ff0ba841dd7c1e3a918aafd1b4376ead82f66f292c8d49d4021e
+~~~
+
+A fresh deterministic measurement of exactly the declared DATA byte range (file bytes 0x40 through 0x40 + 0x00a2db82) returned:
+
+| Measurement | Result |
+|---|---:|
+| DATA length | 10,673,026 bytes |
+| Length modulo 16 | 2 |
+| Distinct byte values | 256 |
+| Shannon entropy | 7.999983875583 bits/byte |
+| Lowest / highest single-byte counts | 41,086 / 42,203 |
+| First 16 bytes | `eef6429855e61ce16a030bee60bfe2e9` |
+| Last 16 bytes | `385931767253eb29542ebb60ba14974c` |
+
+**Confirmed:** IMG3 stores numeric fields and tag identifiers in little-endian form; the parsed DATA, SEPO, and KBAG structure is consistent with publicly auditable IMG3 format references. Ghidra's open-source IMG3 parser defines AES_256 = 0x100 and models a KBAG as a crypt-state field, AES-type field, encrypted IV, and encrypted key. The local tag's 56-byte KBAG data length is consistent with that layout.
+
+**Not established:** the meaning of the observed cryptState=0x1 and 0x2 values beyond being crypt-state fields. This repository must not label them “production” or “development” states without a device-generation-specific source. Likewise, aesType=0x100 establishes the KBAG key-size type, not an AES mode, a usable key, or successful decryption.
+
+**Inference bounded by the evidence:** the near-maximal entropy and raw-signature false positives are compatible with encrypted or compressed data, but prove neither. The DATA length is not divisible by AES's 16-byte block size. That rules out treating the whole DATA range as a *bare, block-aligned AES-CBC/ECB ciphertext* without some additional framing, padding convention, or unencrypted tail. It does **not** rule out encryption: an unaudited wrapper, segmentation, a tail, or a stream-like AES mode could have a non-aligned length. No AES mode is identified here.
+
+### Auditable references
+- [Ghidra IMG3 KBAG parser API](https://fossies.org/dox/ghidra-Ghidra_12.1.4_build/classghidra_1_1file_1_1formats_1_1ios_1_1img3_1_1tag_1_1KBagTag.html) (open-source parser documentation; confirms AES_256=0x100 and KBAG field model).
+- [Ghidra source path](https://github.com/NationalSecurityAgency/ghidra/blob/master/Ghidra/Features/FileFormats/src/main/java/ghidra/file/formats/ios/img3/tag/KBagTag.java) (source used by the parser).
+- [IMG3 File Format](https://theapplewiki.com/wiki/Img3) (community-maintained reverse-engineering reference; secondary corroboration, not proof of this artifact's undecrypted contents).
+- [idevicerestore IMG3 header](https://cgit.sukimashita.com/idevicerestore.git/tree/src/img3.h) (auditable open-source IMG3 constants).
+
+No decryption, decompression, extraction, boot experiment, device-side action, or overwrite was performed.
