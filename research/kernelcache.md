@@ -125,18 +125,41 @@ All bytes accounted for: True
 
 `SEPO` is documented as the Security Epoch tag. Each `KBAG` has 56 bytes of tag data (`0x38`). The documented KBAG structure starts with two 32-bit fields (`cryptState` and `aesType`), followed by an encrypted IV and encrypted key. A 56-byte data area is consistent with the documented AES-256 keybag layout (8 bytes of fields + 16-byte IV + 32-byte key), but the two fields have not yet been read from this artifact. Do not claim AES-256 as confirmed until `aesType` is inspected. The existence of KBAG metadata indicates an encryption-related image format; it does not independently establish whether the DATA payload is additionally compressed.
 
+## KBAG and SEPO field inspection
+
+The user ran a read-only Python parser on the **Mac**. It decoded only the first eight data bytes of each KBAG and the four-byte SEPO value; it did not print the remaining encrypted IV/key material.
+
+Observed output:
+
+~~~text
+SEPO security epoch: 16
+
+KBAG at 0xa2dbec
+  cryptState: 0x1
+  aesType:    0x100
+
+KBAG at 0xa2dc38
+  cryptState: 0x2
+  aesType:    0x100
+~~~
+
+**Confirmed from this artifact:** SEPO is 16. Both KBAG entries report `aesType=0x100`, which the documented IMG3 KBAG format defines as AES-256. The first entry reports `cryptState=0x1` (production GID-key state); the second reports `cryptState=0x2` (development GID-key state). This identifies the metadata fields and keybag types, not the actual key values. No key material was printed or recovered.
+
+**Important limitation:** these metadata values do not decrypt the DATA payload. They also do not establish whether the DATA payload is compressed, or whether it uses an additional compression wrapper. No extraction or decryption has been performed.
+
 ## Not yet done
 - Inspect the first 256 bytes. — Complete
 - Record a SHA-256 digest. — Complete
 - Parse and validate all IMG3 tag boundaries. — Complete
-- Identify payload and any compression format.
+- Read SEPO and both KBAG metadata fields. — Complete
+- Identify payload encoding and any compression format.
 - Extract the kernel to a separate file.
 - Verify whether the extracted object is a Mach-O ARMv7 kernel.
 - Inspect Mach-O load commands and platform metadata.
 
 ## Next read-only step
 
-Read only the first eight data bytes of each KBAG (the documented `cryptState` and `aesType` fields) and the four-byte SEPO value. Do not print the remaining KBAG bytes, which contain encrypted IV/key material. This can be done locally on the Mac and does not contact or modify the iPad.
+Determine the DATA payload's storage/encoding and whether it has a compression wrapper. Choose a known, auditable Mac-side parser or extraction utility, first checking its documented behavior and ensuring it writes to a separate output file. Preserve the original kernelcache and do not attempt decryption or device-side changes as part of this step.
 
 Do not overwrite the original kernelcache. Any extraction should write to a new path in ~/Desktop/iPad3-Research/.
 
