@@ -266,3 +266,17 @@ The device-tree tags independently encode the same chip boundary as the manifest
 | KBAG tags | none | two (`cryptState=1`, `cryptState=2`) |
 
 The donor DATA begins with a structured binary header and has no KBAG tags. The target DATA begins with high-entropy bytes and is followed by two KBAGs. This is independent evidence that simply grafting J1AP device-tree bytes into the iPad4 donor does not produce a coherent iOS 10 image: the donor manifest, chip identity, encryption arrangement, and kernel remain from different platform generations.
+
+## Boot-chain IMG3 metadata comparison (2026-11-17)
+
+The chip mismatch is repeated across the boot chain, not limited to the kernelcache:
+
+| Component family | Donor iPad4 | Target iPad3,1 |
+|---|---|---|
+| iBoot / iBEC CHIP | `0x8955` | `0x8945` |
+| LLB / iBSS CHIP | `0x8955` | `0x8945` |
+| SEPO | 16 | 16 |
+| BORD tags | absent | values 0 and 1 |
+| KBAG tags | absent | two AES-256-key-size entries |
+
+The donor and target boot images are therefore signed/encrypted for different chip families and have different IMG3 metadata layouts. The mixed bundle's swapped J1AP boot files retain their target CHIP/KBAG metadata while the donor manifest and donor kernel remain P101AP/A6X-oriented. This is a concrete reason to keep the artifact offline-only; further blind substitutions cannot make it coherent.
