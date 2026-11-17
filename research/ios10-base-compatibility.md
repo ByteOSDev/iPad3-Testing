@@ -155,3 +155,24 @@ Darwin Kernel Version 16.6.0: Mon Apr 17 17:33:34 PDT 2017; root:xnu-3789.60.24~
 ```
 
 This proves that the downloaded donor kernelcache can be decoded into a valid 32-bit ARM Mach-O executable. It does **not** prove that this kernel can run on the iPad3,1/A5X target. The CPU subtype, platform build, board/device-tree set, and driver configuration still require compatibility analysis. No boot or install attempt was made.
+
+## Manifest-only experiment (2026-11-17)
+
+A separate offline copy of the verified iPad4 10.3.2 IPSW was created. Its `BuildManifest.plist` was changed only to set `SupportedProductTypes = [iPad3,1]` and add a `PortExperiment` marker containing `NONINSTALLABLE=true`. A README was also added inside the archive.
+
+This experiment intentionally leaves every donor payload unchanged: the A6X/ARMv7s kernelcache, P101AP/P102AP/P103AP device trees, iPad4 boot components, and signed firmware remain donor-specific. It is therefore **not a compatible or restorable IPSW** and must not be passed to Finder, iTunes, idevicerestore, or a boot tool.
+
+The original downloaded archive and the verified original-copy archive were preserved separately. The manifest-only experiment is identified by SHA-256:
+
+```
+ba77aa2cb54f3a99e67393eb55d3c845650c5129465f93aadd71c2856c1dcfd6
+```
+
+### Compatibility plan after the routing experiment
+
+1. Keep the manifest experiment as evidence only; do not test it on hardware.
+2. Compare donor and target BuildManifest component roles and board/platform identifiers.
+3. Compare decoded donor Mach-O architecture, CPU subtype, UUID, load commands, and platform strings with a legally obtained target-compatible kernel reference.
+4. Analyze J1AP device-tree and boot-chain requirements separately from iOS 10 userspace.
+5. Treat any component replacement as requiring signature/personalization analysis; do not assume a ZIP edit creates a bootable image.
+6. Only consider a device-side experiment if static compatibility evidence and a recoverable test path exist.
