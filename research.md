@@ -83,7 +83,7 @@ The file utility reports generic data. The first 64 bytes from xxd begin with:
 
 The leading bytes 33 67 6d 49 correspond to ASCII 3gmI, the little-endian representation of the IMG3 magic. This is a **preliminary identification of an IMG3 container**. The tag structure, payload encoding/compression, and extracted kernel format have not been verified.
 
-The kernelcache has not been extracted or modified. See [research/kernelcache.md](research/kernelcache.md).
+The 256-byte header dump and SHA-256 fingerprint have now been collected. The digest is `232caa3bfe34ff0ba841dd7c1e3a918aafd1b4376ead82f66f292c8d49d4021e`; the Mac reports a size of approximately 10 MB. The IMG3 header decodes to `fullSize=0x00a2dc8c`, `sizeNoPack=0x00a2dc78`, `sigCheckArea=0x00a2dc78`, and image identifier `krnl`. The first tags are `TYPE` (value `krnl`) and `DATA` (tag total length `0x00a2db9c`, data length `0x00a2db82`). Full tag-boundary validation is still pending. The kernelcache has not been extracted or modified. See [research/kernelcache.md](research/kernelcache.md).
 
 ## 5. Compatibility research questions
 
@@ -111,7 +111,7 @@ See [research/compatibility.md](research/compatibility.md).
 - The installed software reports iOS 9.3.5, build 13G36.
 - SSH access to the normal booted installation works with the host-key option shown above.
 - A kernelcache file was copied to the Mac.
-- The copied file begins with bytes consistent with IMG3 magic.
+- The copied file begins with bytes consistent with IMG3 magic; its header fields and initial TYPE/DATA tags have also been decoded from the 256-byte dump.
 
 ### Preliminary interpretation / hypotheses
 - The kernelcache is wrapped in an IMG3 container. The magic strongly supports this, but the container should be parsed and its tags validated.
@@ -140,20 +140,9 @@ See [research/methodology.md](research/methodology.md).
 
 ## 8. Current status and immediate next step
 
-The immediate objective is to inspect the downloaded iOS 9.3.5 IMG3 kernelcache on the Mac, without changing the iPad.
+The immediate objective is to finish validating the downloaded iOS 9.3.5 IMG3 kernelcache structure on the Mac, without changing the iPad.
 
-The next suggested commands have **not yet been executed**:
-
-~~~sh
-xxd -s 0 -l 256 ~/Desktop/iPad3-Research/kernelcache
-shasum -a 256 ~/Desktop/iPad3-Research/kernelcache
-~~~
-
-The first displays a larger header region for IMG3 tag inspection. The second records a SHA-256 digest so the local artifact can be identified and checked for accidental changes.
-
-After collecting that output:
-1. Parse and validate the IMG3 header and tag layout.
-2. Determine payload encoding and compression, if any.
+The 256-byte dump and SHA-256 command have been completed. The next step is to parse and validate every IMG3 tag boundary locally, then determine payload encoding and compression, if any.
 3. Identify a safe Mac-side extraction method.
 4. Extract to a new output file; never overwrite the original.
 5. Determine whether the extracted data is a Mach-O ARMv7 kernel and inspect metadata.
