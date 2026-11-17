@@ -336,3 +336,29 @@ A public-source survey found no iOS 10 restore IPSW or kernelcache identified fo
 - [IPSW firmware comparison](https://www.ipsw.io/blog/ipad-3-4-firmware)
 
 This is not a proof that a private or unreleased engineering kernel never existed. It does establish that the current public IPSW corpus does not supply the missing A5X/J1AP iOS 10 kernel reference. Milestone 17 remains blocked on that missing artifact or a source-level port.
+## Remaining-requirements audit (2026-11-17)
+
+### Source-level kernel path
+
+Apple's public XNU repository provides source for the broader XNU family, and public release indexes identify XNU 3789.60.24 in the iOS 10 timeframe. That source is not the complete Apple iOS kernel build: platform drivers, proprietary headers, firmware interfaces, signing inputs, and device-specific configuration remain separate. A source-level A5X port would therefore require a new build configuration plus hardware-specific implementations and test evidence.
+
+- [Apple XNU source repository](https://github.com/apple-oss-distributions/xnu)
+- [XNU release index showing 3789.60.24](https://openhub.net/p/Darwin/commits)
+
+### Signing and personalization
+
+Apple's security documentation states that update authorization signs known cryptographic measurements and binds authorization to device values such as the ECID and anti-replay data. Editing an IPSW or replacing a component cannot recreate that authorization. The mixed bundles therefore remain offline research artifacts.
+
+- [Apple Platform Security Guide](https://help.apple.com/pdf/security/en_GB/apple-platform-security-guide-b.pdf)
+- [Apple secure software updates](https://support.apple.com/en-lamr/guide/security/secf683e0b36/web)
+
+### Target filesystem boundary
+
+The target user system image begins with encrcdsa and was not decrypted or mounted. Closing the filesystem comparison requires an authorized decrypted reference or a separately obtained filesystem snapshot. No encryption key, signing key, or bypass was requested or used.
+
+### What remains genuinely required
+
+1. A target-compatible A5X/J1AP iOS 10 kernel reference, or a complete source-level port with proprietary platform inputs.
+2. A reproducible, authorized way to inspect the target filesystem image.
+3. A legitimate signing/personalization path for any device-bound image.
+4. A spare-device recovery plan and a validated bootable artifact before hardware testing.
