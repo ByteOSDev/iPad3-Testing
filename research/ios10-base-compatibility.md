@@ -85,3 +85,41 @@ The published donor checksum remains:
 ```
 
 The donor component comparison is pending until an independently obtained archive can be verified against that digest. This is an acquisition limitation, not evidence that the IPSW contents are compatible with iPad3,1.
+
+## Verified donor archive and kernelcache comparison (2026-11-17)
+
+The downloaded donor archive was inspected read-only:
+
+- Product family: iPad4 Wi-Fi / `iPad3,4` (the archive also carries iPad3,5 and iPad3,6 identities)
+- Product version: iOS 10.3.2
+- Build: `14F89`
+- Archive size: 1,930,214,085 bytes
+- Archive SHA-256: `404689afbd30f4e418cc4a70aa7d18d4d5532fbafd6bce1314cbd1944230a26a`
+- Kernel member: `kernelcache.release.ipad3b`
+- Kernel member SHA-256: `0fb87e09cde7b5a0321ab34d982c0678b3fbe2429c96c38ef7cb0fab682922e3`
+
+The donor kernelcache IMG3 parse is structurally complete:
+
+| Logical tag | Offset | Total length | Data length |
+|---|---:|---:|---:|
+| TYPE | 0x14 | 0x20 | 0x04 |
+| DATA | 0x34 | 0x00b1529c | 0x00b15282 |
+| SEPO | 0x00b152d0 | 0x3c | 0x04 |
+
+The final parsed offset is `0x00b1530c`, equal to the donor kernel member length. No KBAG tag is present in this donor kernelcache.
+
+The donor DATA begins with the ASCII marker `complzss` at its payload start. Its header is followed by an LZSS-compressed stream whose apparent compressed stream begins at IMG3 file offset `0x1c0`; the first bytes there are `ff ce fa ed fe`. Public reverse-engineering references describe `complzss` as Apple's LZSS kernelcache wrapper and identify the decompressed 32-bit Mach-O marker as `ce fa ed fe`. This is strong evidence that this donor DATA is plaintext-compressed rather than protected by an IMG3 KBAG, but no decompression was performed in this step.
+
+For comparison, the preserved target iPad3,1 kernelcache has:
+
+- IMG3 tags TYPE, DATA, SEPO, KBAG, KBAG.
+- DATA length 10,673,026 bytes.
+- DATA first 16 bytes: `eef6429855e61ce16a030bee60bfe2e9`.
+- DATA entropy: 7.999983875583 bits/byte.
+- Two `aesType=0x100` KBAG entries.
+
+This is a real container/format difference between the donor iOS 10.3.2 kernelcache and the target iOS 9.3.5 kernelcache. It does **not** establish that the donor kernel, device tree, boot chain, or drivers are compatible with J1AP/A5X, and it does not authorize a restore or boot attempt.
+
+### Next safe analysis step
+
+Use a source-auditable `complzss`/LZSS decoder on a separately written donor output, verify that the result begins with the expected 32-bit Mach-O marker, and record its Mach-O architecture and UUID. Preserve both IPSW archives and the original target kernelcache unchanged.
