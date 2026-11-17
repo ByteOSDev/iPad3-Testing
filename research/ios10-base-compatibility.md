@@ -207,3 +207,25 @@ The donor BuildManifest contains six build identities for device classes `p102ap
 The mixed bundle changes its top-level `SupportedProductTypes` to `iPad3,1`, but intentionally retains the donor's six P101/P102/P103 identities. This is a deliberate warning: the mixed bundle is not even a coherent restore manifest, in addition to having invalid payload signatures and an A6X donor kernel. It must remain analysis-only.
 
 No further manifest edits will be treated as a compatibility fix. A genuinely coherent port would require a new, target-specific manifest whose component digests, signing/personalization data, kernel, device tree, boot chain, and userspace all agree; the current evidence does not provide that.
+
+## Device-tree and kernel identity audit (2026-11-17)
+
+The donor and target device-tree IMG3 members differ materially:
+
+| Artifact | Size | Logical tags | DATA entropy | DATA first bytes |
+|---|---:|---|---:|---|
+| Donor P101AP `DeviceTree.p101ap.img3` | 80,844 | TYPE, DATA, VERS, SEPO, CHIP, BORD | 3.00034442 | `13 00 00 00 0f 00 00 00 74 61 72 67 65 74 2d 74` |
+| Target J1AP `DeviceTree.j1ap.img3` | 84,364 | TYPE, DATA, VERS, SEPO, CHIP, BORD, KBAG, KBAG | 7.99792937 | `1b ba b9 c0 11 76 81 2e a3 d6 ec ac 36 9a c9 ea` |
+
+The donor device tree is a plaintext structured IMG3 DATA region; the target device tree is encrypted/keybagged in this artifact. This explains why the mixed bundle can carry the J1AP device-tree bytes as a research substitution but cannot be semantically compared without decryption, which remains out of scope.
+
+The decoded donor iOS 10.3.2 kernel Mach-O has:
+
+- UUID: `47ff35fed0c2392f9fed952adac7067e`
+- ARM CPU subtype: `0x0b`
+- File type: executable
+- 19 load commands
+- Segments including `__PRELINK_TEXT`, `__PRELINK_DATA`, and `__PRELINK_INFO`
+- Decoded SHA-256: `5e1a9e9fda3b7eb84efccb79cf0cf76979ea988270fcac667d8990db7b57ccc8`
+
+This gives us a stable donor kernel identity for future comparison. It does not establish that the A5X/J1AP target can execute an ARM subtype-`0x0b` kernel.
