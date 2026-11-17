@@ -253,3 +253,16 @@ The donor and target manifests also carry different SHA-1 component digests:
 | iBSS | `38a338c0766a13545f1424dc5006c4a69d40bfac` | `7273403dbd6150963f4ab917510a6a9f383da6a3` |
 
 The differing `ApChipID` values are direct manifest evidence that the donor and target belong to different SoC families. The mixed bundle's component swaps do not resolve this boundary; its donor kernelcache, manifest digests, and signing/personalization relationships remain incompatible.
+
+## Device-tree IMG3 metadata audit (2026-11-17)
+
+The device-tree tags independently encode the same chip boundary as the manifests:
+
+| Tag | Donor P101AP | Target J1AP |
+|---|---:|---:|
+| SEPO | 16 | 16 |
+| CHIP | `0x8955` | `0x8945` |
+| BORD | 0 | 0 |
+| KBAG tags | none | two (`cryptState=1`, `cryptState=2`) |
+
+The donor DATA begins with a structured binary header and has no KBAG tags. The target DATA begins with high-entropy bytes and is followed by two KBAGs. This is independent evidence that simply grafting J1AP device-tree bytes into the iPad4 donor does not produce a coherent iOS 10 image: the donor manifest, chip identity, encryption arrangement, and kernel remain from different platform generations.
