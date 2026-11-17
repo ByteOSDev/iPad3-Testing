@@ -362,3 +362,39 @@ The target user system image begins with encrcdsa and was not decrypted or mount
 2. A reproducible, authorized way to inspect the target filesystem image.
 3. A legitimate signing/personalization path for any device-bound image.
 4. A spare-device recovery plan and a validated bootable artifact before hardware testing.
+
+## Public XNU source and build-feasibility audit (2026-11-17)
+
+The official historical source URL for `xnu-3248.60.10` remains retrievable: it redirects from Apple Open Source to the tag in the Apple OSS Distributions repository. The downloaded source archive had SHA-256 `a4f646c6d34814df5a729a2c0b380c541dd5282b5d82e35e31bf66c034c2b761`.
+
+A non-device build-feasibility check was performed in a disposable temporary directory. It did not read, modify, decrypt, or run either IPSW/kernelcache and produced no kernel artifact.
+
+Confirmed source-tree limitations:
+
+| Check | Result |
+|---|---|
+| Public source release | `xnu-3248.60.10` (iOS 9-era XNU series) |
+| Public source declared supported architecture configurations | `X86_64`, `X86_64H` |
+| J1AP / S5L8945X / ARMv7 target declaration | Not present in the public configuration searched |
+| Embedded build entry point | Present as `make all_embedded` |
+| Required default SDK | `macosx.internal` |
+| Build result | Stops before target configuration because the internal SDK, associated tools, and embedded device map are unavailable |
+
+The public build rules resolve SDK/tool paths using `xcrun` and request Apple-internal items such as `macosx.internal`, `embedded_device_map`, `migcom`, and CTF tools. The attempted `make all_embedded` invocation therefore fails with the missing internal SDK and then reports no target configurations. Separately, the source's `SUPPORTED_ARCH_CONFIGS` list contains only desktop x86 configurations, not ARMv7 or J1AP.
+
+This is direct, reproducible evidence that the public XNU release is useful for source study but is not a complete, buildable A5X/J1AP iOS kernel source package. Constructing a real J1AP iOS 10 kernel would require the missing target build configuration, proprietary platform drivers and firmware interfaces, historical SDK/toolchain inputs, and an authorized signing/personalization path. None were substituted or bypassed.
+
+References:
+
+- [Apple XNU source tag: xnu-3248.60.10](https://github.com/apple-oss-distributions/xnu/tree/xnu-3248.60.10)
+- [Apple XNU source tag: xnu-3789.60.24](https://github.com/apple-oss-distributions/xnu/tree/xnu-3789.60.24)
+- [Current Apple OSS XNU repository](https://github.com/apple-oss-distributions/xnu)
+
+## Change log
+
+### 2026-11-17 — Public-source build feasibility checked
+
+- Retrieved and hashed the official public XNU 3248.60.10 source archive in a disposable analysis directory.
+- Inspected its declared architecture/configuration and embedded-build dependencies.
+- Performed one non-device `all_embedded` build check; it stopped at the expected unavailable Apple-internal SDK/tooling boundary.
+- Recorded that no target ARMv7/J1AP kernel was built and no device or firmware artifact was changed.
