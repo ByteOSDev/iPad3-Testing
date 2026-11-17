@@ -20,6 +20,7 @@
 | IMG3 container identification | Complete | Magic, header, and tags parsed |
 | Validate every IMG3 tag boundary | Complete | All bytes accounted for; parser ended at exact file size |
 | Record observed tag sequence | Complete | TYPE, DATA, SEPO, KBAG, KBAG |
+| Inspect SEPO and KBAG metadata fields | Complete | SEPO=16; both aesType=0x100 (AES-256); cryptState values 0x1 and 0x2 |
 | Inspect first 256 bytes and decode header / initial tags | Complete | Header fields and initial tags decoded |
 | Record kernelcache SHA-256 | Complete | `232caa3bfe34ff0ba841dd7c1e3a918aafd1b4376ead82f66f292c8d49d4021e` |
 | Determine payload encoding/compression | Pending | Not established |
@@ -33,14 +34,22 @@
 | Assess drivers and userspace | Pending | Not started |
 | Experimental boot | Not started | No device-side modifications |
 
+## Confirmed IMG3 metadata
+
+- SEPO security epoch: `16`.
+- First KBAG at `0xa2dbec`: `cryptState=0x1`, `aesType=0x100` (production GID-key state, AES-256).
+- Second KBAG at `0xa2dc38`: `cryptState=0x2`, `aesType=0x100` (development GID-key state, AES-256).
+- Only the metadata fields were read. Encrypted IV/key bytes were not printed or recovered.
+- This does not establish DATA payload compression or decrypt the kernelcache.
+
 ## Immediate next step
 
-Run a read-only Python check on the **Mac** to decode the first two 32-bit fields (`cryptState` and `aesType`) in each KBAG and the four-byte SEPO value. Do not print the rest of the KBAG data, which contains encrypted IV/key material.
+Determine the DATA payload's encoding and whether it is compressed. Select a safe, auditable Mac-side inspection method before extracting anything. Preserve the original kernelcache and write any output to a separate file.
 
 ## Following steps
-1. Inspect KBAG metadata fields and SEPO value.
-2. Determine how the payload is stored and whether it is compressed.
-3. Select a safe local inspection/extraction method.
+1. Identify the payload format and any compression wrapper.
+2. Select and validate a local parser/extraction method.
+3. If appropriate, extract to a separate output file.
 4. Verify whether extracted data is a Mach-O ARMv7 kernel.
 5. Inspect Mach-O metadata.
 6. Find a suitable iOS 10 32-bit comparison kernel and record its provenance.
@@ -48,6 +57,12 @@ Run a read-only Python check on the **Mac** to decode the first two 32-bit field
 8. Reassess feasibility before considering any device-side experiment.
 
 ## Change log
+
+### 2026-11-17 — KBAG and SEPO metadata inspection
+- Read the four-byte SEPO value: `16`.
+- Read the first two 32-bit fields of both KBAG entries without printing encrypted IV/key bytes.
+- Both entries report `aesType=0x100` (AES-256); `cryptState=0x1` and `0x2` identify production and development GID-key states, respectively.
+- No decryption, extraction, or device-side changes were performed.
 
 ### 2026-11-17 — IMG3 tag validation
 - Parsed the complete IMG3 tag sequence: TYPE, DATA, SEPO, KBAG, KBAG.
