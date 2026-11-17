@@ -167,3 +167,42 @@ Do not overwrite the original kernelcache. Any extraction should write to a new 
 - Do not infer payload compression solely from IMG3 magic or KBAG presence.
 - The observed tag sequence is confirmed for this artifact; do not generalize it to every IMG3 image.
 - Do not treat successful extraction as proof that the kernel is boot-compatible with another iOS release.
+
+
+## DATA payload entropy and compression-signature inspection
+
+On 2026-11-17, the user performed read-only analysis of the DATA payload on the Mac. The DATA bytes begin at IMG3 file offset `0x40`; the payload length is 10,673,026 bytes.
+
+Observed measurements:
+- Unique byte values: 256 / 256.
+- Shannon entropy: 8.0000 bits per byte.
+- First 16 bytes: `eef6429855e61ce16a030bee60bfe2e9`.
+
+A byte-pattern scan (offsets below are relative to the DATA payload start) reported:
+- GZIP signature `1f 8b`: 146 matches.
+- XZ signature: 0 matches.
+- BZIP2 signature: 2 matches.
+- LZ4 signature: 0 matches.
+- LZMA signature: 0 matches.
+- ZLIB signature `78 9c`: 164 matches.
+
+The first GZIP-like candidate at payload offset `0x11d4c` was inspected:
+~~~text
+1f 8b fa eb b3 9f 3f 6d 43 6f 36 89 4e 68 22 21
+e8 b2 2b be 9a 09 27 49 52 a9 36 0e 79 25 ae a8
+
+ID1: 0x1f
+ID2: 0x8b
+Compression method: 250
+Flags: 0xeb
+~~~
+
+**Interpretation:** this candidate is not a valid GZIP header. GZIP uses compression method 8 (DEFLATE); method 250 is invalid. Flags `0xeb` also set reserved flag bits, which is invalid under the GZIP format. Therefore, this match is a false positive for a valid GZIP stream. The scan counts are raw signature occurrences, not counts of verified compressed streams.
+
+**Entropy limitation:** 8.0000 bits/byte and all 256 byte values are consistent with encrypted data, but do not prove encryption. Highly compressed data can also have high entropy. The AES-256 KBAG metadata is confirmed, but the DATA payload has not been decrypted. No compression format has yet been identified or ruled out.
+
+No decompression, extraction, decryption, or device-side modification has been performed.
+
+## Updated next step
+
+Do not try to decompress the invalid GZIP candidate. Continue with format-aware IMG3/kernelcache research and identify a known, auditable parser that understands this Apple kernelcache generation. Any eventual extraction must write to a new file and preserve the original. Do not infer that the DATA payload is plain compressed data from isolated byte signatures.
