@@ -45,3 +45,15 @@ No decryption, signing-key recovery, device-side modification, restore, or boot 
 ## Latest update — 2026-11-17
 
 The donor/target restore-image and system-image audit is documented in research/ios10-base-compatibility.md. The target filesystem image is encrypted, so further filesystem comparison requires an authorized decryption method or a separately obtained decrypted reference. No device-side action occurred.
+
+## Latest update — 2026-11-17 (remaining-requirements closure)
+
+The remaining public, offline requirements were audited against the available evidence:
+
+- **Source path:** Apple’s public XNU repository and the public XNU release index are now recorded as references. They do not provide the proprietary A5X/J1AP iOS 10 driver, firmware, signing, or device configuration inputs needed for a build.
+- **Signing path:** Apple’s security documentation confirms that software authorization is based on signed measurements and device-bound values such as ECID/anti-replay data. An edited IPSW cannot recreate that authorization.
+- **Filesystem path:** the target user image still begins with `encrcdsa`; no decryption or mount was attempted. A separately obtained, authorized decrypted reference remains necessary for a complete userspace comparison.
+- **Public-kernel search:** no public iOS 10 J1AP/A5X kernel reference was found. Milestone 17 remains blocked; this is a missing-artifact limitation, not a compatibility claim.
+- **Hardware gate:** no bootable artifact or recoverable test procedure exists, so no device-side testing is justified.
+
+This closes the safe research/documentation work currently possible without decryption, signing-key recovery, a target-compatible kernel, or hardware experimentation.
