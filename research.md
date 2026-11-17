@@ -157,3 +157,16 @@ See [research/status.md](research/status.md).
 A future goal is an app or workflow that maintains this research repository. When a new discovery is made or an existing finding changes, the automation should update the relevant topic file and root research.md, preserve a dated change history, and avoid promoting unverified statements to confirmed findings.
 
 **This automation does not exist yet and is not active.** At present, repository updates must be made explicitly during research sessions. A future implementation should include reviewable diffs, provenance for evidence, and safeguards against destructive device actions.
+
+
+## 10. DATA payload inspection (2026-11-17)
+
+The IMG3 DATA payload was inspected locally on the Mac without modifying the source file or the iPad. Its size is 10,673,026 bytes; all 256 byte values occur, and measured Shannon entropy is 8.0000 bits/byte. The first 16 payload bytes are `eef6429855e61ce16a030bee60bfe2e9`.
+
+A raw signature scan found 146 GZIP-like, 2 BZIP2-like, and 164 ZLIB-like byte patterns, with no XZ, LZ4, or LZMA matches. These are only byte-pattern matches, not proof of compressed streams.
+
+The first GZIP-like candidate at payload-relative offset `0x11d4c` begins `1f 8b fa eb`. Its compression-method byte is `0xfa` (250), not GZIP's required method 8, and its flags byte `0xeb` sets reserved bits. It is therefore not a valid GZIP header and is a false positive. No decompression was attempted.
+
+**Assessment:** the high entropy is consistent with encrypted data but cannot prove encryption or rule out compression. The AES-256 KBAG metadata is confirmed, but the DATA payload remains unclassified, undecrypted, and unextracted. The next step is to identify a format-aware, auditable parser for this kernelcache generation. Any extraction must write to a separate file and preserve the original.
+
+See [research/kernelcache.md](research/kernelcache.md) for the detailed measurements and [research/status.md](research/status.md) for current status.
