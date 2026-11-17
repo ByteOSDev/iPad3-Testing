@@ -54,3 +54,22 @@ No decryption, boot experiment, device-side change, or installation attempt was 
 - Confirmed the donor/target product, board, and SoC distinction from public references.
 - Classified the donor IPSW as analysis-only until component-level compatibility is demonstrated.
 - Added a safe, non-destructive comparison workflow.
+
+## Target IPSW baseline verified (2026-11-17)
+
+A locally available iPad3,1 restore archive was inspected read-only. The archive manifest reports:
+
+- Product type: `iPad3,1`
+- Product version: iOS `9.3.5`
+- Build: `13G36`
+- Included kernel member: `kernelcache.release.j1`
+- Archive SHA-256: `ceec5670fe63f113b766a09b189c50a31e96e4c538905076216fb21170385c95`
+- Embedded kernelcache SHA-256: `232caa3bfe34ff0ba841dd7c1e3a918aafd1b4376ead82f66f292c8d49d4021e`
+
+The embedded kernel member hash exactly matches the separately preserved kernelcache artifact already analyzed. The archive also contains J1AP-specific boot and device-tree components, including `DeviceTree.j1ap.img3`, `iBoot.j1.RELEASE.img3`, `LLB.j1.RELEASE.img3`, and S5L8945X display/recovery assets.
+
+This confirms the current kernelcache provenance and gives us a clean target baseline for a future donor comparison. No archive contents were overwritten, no extraction output was created, and no device action was taken.
+
+## Donor comparison status
+
+The iPad3,4 / 14G60 donor archive is not present in the local workspace yet. Therefore, no claim is made about its actual component inventory beyond the public IPSW metadata. The next safe comparison requires obtaining that archive independently, verifying its published SHA-256, and inventorying it without restoring it.
