@@ -25,7 +25,7 @@ Status meanings: Complete = reproduced and documented. Partial = meaningful evid
 | 14 | Compare manifest component metadata | Complete | Donor identities are P101/P102/P103; target identities are J1AP. Donor and target component metadata differ. |
 | 15 | Build compatibility matrix | Complete | Kernel, device tree, boot chain, display, WLAN, NAND, USB, and driver differences are documented in research/ios10-base-compatibility.md. |
 | 16 | Identify compatible iOS 10 userspace components | Partial | Donor system image is readable UDZO; target system image begins encrcdsa and remains uninspected without decryption. No runtime test has been performed. |
-| 17 | Obtain an A5X/J1AP iOS 10 kernel reference | Blocked | Public-source survey found no iOS 10 J1AP/A5X IPSW or kernelcache; public references list iOS 9.3.6 as the latest compatible release. A private/unreleased artifact cannot be ruled out. |
+| 17 | Obtain an A5X/J1AP iOS 10 kernel reference | Blocked | No public iOS 10 J1AP/A5X IPSW or kernelcache was found. Official public XNU 3248.60.10 source declares only desktop x86 configurations and requires unavailable Apple-internal embedded SDK/device-map inputs; it cannot produce a J1AP kernel as released. |
 | 18 | Resolve signing/personalization requirements | Partial | Manifest and IMG3 signing relationships are understood at a high level; no signing keys, personalization, or bypass has been attempted. |
 | 19 | Create offline analysis bundles | Complete | Manifest-only and mixed-component bundles were created with explicit NONINSTALLABLE warnings. |
 | 20 | Establish recovery gate for hardware testing | Blocked | No safe, validated bootable image or recovery procedure exists; no hardware experiment is authorized by the evidence. |
@@ -57,3 +57,7 @@ The remaining public, offline requirements were audited against the available ev
 - **Hardware gate:** no bootable artifact or recoverable test procedure exists, so no device-side testing is justified.
 
 This closes the safe research/documentation work currently possible without decryption, signing-key recovery, a target-compatible kernel, or hardware experimentation.
+
+## Latest update — 2026-11-17 (public source build check)
+
+Milestone 17 was tested against Apple’s public historical XNU source rather than treated as an assumption. The official `xnu-3248.60.10` source archive was retrieved and hashed in a disposable directory. Its `all_embedded` build entry point requires `macosx.internal`, Apple-internal toolchain components, and an embedded device map; its declared supported architecture configurations are `X86_64` and `X86_64H`, not ARMv7/J1AP. The one build-feasibility invocation stopped before target selection, and no artifact was used or retained as firmware. This confirms that the public release cannot serve as a from-scratch A5X/J1AP iOS 10 kernel build kit.
