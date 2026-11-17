@@ -73,3 +73,15 @@ This confirms the current kernelcache provenance and gives us a clean target bas
 ## Donor comparison status
 
 The iPad3,4 / 14G60 donor archive is not present in the local workspace yet. Therefore, no claim is made about its actual component inventory beyond the public IPSW metadata. The next safe comparison requires obtaining that archive independently, verifying its published SHA-256, and inventorying it without restoring it.
+
+## Donor acquisition check (2026-11-17)
+
+The supplied IPSW Downloads page exposes an Apple download URL and publishes the expected SHA-256. A read-only fetch of that Apple URL returned HTTP 404 during this review. The donor archive was therefore **not** downloaded, and no unverified third-party mirror was substituted.
+
+The published donor checksum remains:
+
+```
+3e2bd7d18823d93736a68d85961ff7ece5dd932a19c58d52e43282a6ea6ac312
+```
+
+The donor component comparison is pending until an independently obtained archive can be verified against that digest. This is an acquisition limitation, not evidence that the IPSW contents are compatible with iPad3,1.
