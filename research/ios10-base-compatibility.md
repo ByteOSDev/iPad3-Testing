@@ -295,3 +295,9 @@ The decoded donor Mach-O contains a `__PRELINK_INFO` region of 708,500 bytes. A 
 - `com.apple.driver.AppleInterruptController`
 
 This is evidence that the donor kernelcache embeds a large, platform-specific prelinked driver set. The inventory alone cannot show whether the A5X/J1AP target's required implementations are ABI- or hardware-compatible; that requires a target-compatible decoded kernel/reference or source-level comparison. No kexts were extracted or modified.
+
+## Digest interpretation correction (2026-11-17)
+
+The `Digest` fields printed from Apple BuildManifest entries were compared with raw SHA-1 values of archive members. They do not equal the raw member SHA-1s, so this research does **not** interpret them as simple file hashes. They may represent Apple-specific payload/signature digest inputs.
+
+The mixed bundle nevertheless retains the donor manifest's original digest metadata while replacing the corresponding component bytes with J1AP files. No digest recalculation, signing, or personalization was performed. The bundle remains non-installable and analysis-only.
