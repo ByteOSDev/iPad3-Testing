@@ -280,3 +280,18 @@ The chip mismatch is repeated across the boot chain, not limited to the kernelca
 | KBAG tags | absent | two AES-256-key-size entries |
 
 The donor and target boot images are therefore signed/encrypted for different chip families and have different IMG3 metadata layouts. The mixed bundle's swapped J1AP boot files retain their target CHIP/KBAG metadata while the donor manifest and donor kernel remain P101AP/A6X-oriented. This is a concrete reason to keep the artifact offline-only; further blind substitutions cannot make it coherent.
+
+## Donor kernel prelink inventory (2026-11-17)
+
+The decoded donor Mach-O contains a `__PRELINK_INFO` region of 708,500 bytes. A byte-level scan found 180 distinct `CFBundleIdentifier` entries, including platform-sensitive families such as:
+
+- `com.apple.driver.AppleARMPlatform`
+- `com.apple.driver.AppleA5AE2`
+- `com.apple.driver.AppleBCMWLAN*`
+- `com.apple.driver.AppleH5GCLCD`
+- `com.apple.driver.AppleMultitouchSPI*`
+- `com.apple.driver.AppleNAND*`
+- `com.apple.driver.AppleEmbeddedUSB*`
+- `com.apple.driver.AppleInterruptController`
+
+This is evidence that the donor kernelcache embeds a large, platform-specific prelinked driver set. The inventory alone cannot show whether the A5X/J1AP target's required implementations are ABI- or hardware-compatible; that requires a target-compatible decoded kernel/reference or source-level comparison. No kexts were extracted or modified.
