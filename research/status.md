@@ -37,8 +37,8 @@
 ## Confirmed IMG3 metadata
 
 - SEPO security epoch: `16`.
-- First KBAG at `0xa2dbec`: `cryptState=0x1`, `aesType=0x100` (production GID-key state, AES-256).
-- Second KBAG at `0xa2dc38`: `cryptState=0x2`, `aesType=0x100` (development GID-key state, AES-256).
+- First KBAG at `0xa2dbec`: `cryptState=0x1`, `aesType=0x100` (AES-256 key-size type; crypt-state semantics not established).
+- Second KBAG at `0xa2dc38`: `cryptState=0x2`, `aesType=0x100` (AES-256 key-size type; crypt-state semantics not established).
 - Only the metadata fields were read. Encrypted IV/key bytes were not printed or recovered.
 - This does not establish DATA payload compression or decrypt the kernelcache.
 
@@ -68,7 +68,7 @@ Determine the DATA payload's encoding and whether it is compressed. Select a saf
 ### 2026-11-17 — KBAG and SEPO metadata inspection
 - Read the four-byte SEPO value: `16`.
 - Read the first two 32-bit fields of both KBAG entries without printing encrypted IV/key bytes.
-- Both entries report `aesType=0x100` (AES-256); `cryptState=0x1` and `0x2` identify production and development GID-key states, respectively.
+- Both entries report `aesType=0x100` (AES-256); `cryptState=0x1` and `0x2` are observed metadata values; their device-specific meanings are not established.
 - No decryption, extraction, or device-side changes were performed.
 
 ### 2026-11-17 — IMG3 tag validation
