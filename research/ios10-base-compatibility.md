@@ -123,3 +123,35 @@ This is a real container/format difference between the donor iOS 10.3.2 kernelca
 ### Next safe analysis step
 
 Use a source-auditable `complzss`/LZSS decoder on a separately written donor output, verify that the result begins with the expected 32-bit Mach-O marker, and record its Mach-O architecture and UUID. Preserve both IPSW archives and the original target kernelcache unchanged.
+
+## Donor kernelcache LZSS decode (2026-11-17)
+
+A source-matched in-memory LZSS decoder was applied to the donor's `complzss` stream. The implementation follows the public `lzssdec` algorithm and its documented Apple BootX provenance:
+
+- [lzssdec source](https://github.com/malus-security/lzssdec/blob/main/lzssdec.cpp)
+- [lzssdec documentation and Apple source reference](https://github.com/malus-security/lzssdec/blob/main/README.md)
+
+No decoded output file was written.
+
+Verified decode results:
+
+| Measurement | Result |
+|---|---:|
+| Header-declared uncompressed size | 20,463,616 bytes |
+| Compressed stream size | 11,620,610 bytes |
+| Decoded size | 20,463,616 bytes |
+| Decoded SHA-256 | `5e1a9e9fda3b7eb84efccb79cf0cf76979ea988270fcac667d8990db7b57ccc8` |
+| Mach-O magic | `ce fa ed fe` |
+| CPU type | `0x0000000c` (ARM) |
+| CPU subtype | `0x0000000b` |
+| File type | `0x00000002` (executable) |
+| Load-command count | 19 |
+| Load-command bytes | 3,108 |
+
+The decoded kernel contains the public build string:
+
+```
+Darwin Kernel Version 16.6.0: Mon Apr 17 17:33:34 PDT 2017; root:xnu-3789.60.24~24/RELEASE_ARM_S5L8950X
+```
+
+This proves that the downloaded donor kernelcache can be decoded into a valid 32-bit ARM Mach-O executable. It does **not** prove that this kernel can run on the iPad3,1/A5X target. The CPU subtype, platform build, board/device-tree set, and driver configuration still require compatibility analysis. No boot or install attempt was made.
