@@ -229,3 +229,27 @@ The decoded donor iOS 10.3.2 kernel Mach-O has:
 - Decoded SHA-256: `5e1a9e9fda3b7eb84efccb79cf0cf76979ea988270fcac667d8990db7b57ccc8`
 
 This gives us a stable donor kernel identity for future comparison. It does not establish that the A5X/J1AP target can execute an ARM subtype-`0x0b` kernel.
+
+## Manifest hardware and digest comparison (2026-11-17)
+
+The target-specific build identities expose a hard platform boundary:
+
+| Field | Donor iPad4/P101AP | Target iPad3,1/J1AP |
+|---|---|---|
+| Device class | `p101ap` | `j1ap` |
+| ApBoardID | `0x00` | `0x00` |
+| ApChipID | `0x8955` | `0x8945` |
+| ApSecurityDomain | `0x01` | `0x01` |
+
+The donor and target manifests also carry different SHA-1 component digests:
+
+| Component | Donor digest | Target digest |
+|---|---|---|
+| KernelCache | `47b753b58cfa09bdcd7f5d6fc251b4de42e3ef73` | `7aaedd449948798d4b054267f3ab0bc1d4762a3b` |
+| DeviceTree | `ded32e0156187bf5d586544de95ce7bd80df0bbe` | `cbf2fa2ab97716a38ba192b76572037301fa9868` |
+| iBoot | `793679755ec17f5a6560d7f0052e0ccf4703fd62` | `160460c4572a21171937d32c77dfaa2ce972d6fe` |
+| LLB | `7932f7b1c4dee4f51ae2aa019f2d72de3fbb85b1` | `bb065b812b8a1079ee22e44c41fcdcb08ed97118` |
+| iBEC | `7b52520541871388b68f0698303a6492ff773407` | `a35631d58a294df804fdbd9ada118984057360cb` |
+| iBSS | `38a338c0766a13545f1424dc5006c4a69d40bfac` | `7273403dbd6150963f4ab917510a6a9f383da6a3` |
+
+The differing `ApChipID` values are direct manifest evidence that the donor and target belong to different SoC families. The mixed bundle's component swaps do not resolve this boundary; its donor kernelcache, manifest digests, and signing/personalization relationships remain incompatible.
