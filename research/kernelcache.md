@@ -76,25 +76,48 @@ strings ~/Desktop/iPad3-Research/kernelcache | grep -Ei 'ARM_S5L|J1AP|AppleARM|D
 
 The first command produced mostly unreadable output. The filtered command returned no matching strings. This is not enough to determine payload format or compression.
 
+## 256-byte header and artifact fingerprint
+
+Commands were run on the **Mac**:
+
+~~~sh
+xxd -s 0 -l 256 kernelcache
+shasum -a 256 kernelcache
+ls -lh kernelcache
+~~~
+
+Observed SHA-256:
+
+~~~text
+232caa3bfe34ff0ba841dd7c1e3a918aafd1b4376ead82f66f292c8d49d4021e
+~~~
+
+Observed size: approximately 10 MB (`ls -lh` reported `10M`).
+
+The 256-byte dump confirms the following initial IMG3 structure (all integer fields are little-endian):
+
+- Header magic bytes: `33 67 6d 49` (`3gmI`), corresponding to IMG3 magic.
+- Header `fullSize`: `0x00a2dc8c`.
+- Header `sizeNoPack`: `0x00a2dc78`.
+- Header `sigCheckArea`: `0x00a2dc78`.
+- Header identifier: `krnl` (kernel image).
+- First tag: `TYPE`, with a 4-byte value identifying `krnl`.
+- Next visible tag: `DATA`; its tag header reports total length `0x00a2db9c` and data length `0x00a2db82`.
+
+These values are decoded from the supplied hex dump using the IMG3 header/tag layout. A complete parser pass is still required to validate every tag boundary and the final file-size relationship. The DATA bytes shown in the dump appear non-textual; that alone does not establish whether they are encrypted, compressed, or both.
+
 ## Not yet done
-- Inspect the first 256 bytes.
-- Record a SHA-256 digest.
-- Parse IMG3 header fields and tag boundaries.
+- Inspect the first 256 bytes. — Complete
+- Record a SHA-256 digest. — Complete
+- Parse IMG3 header fields and tag boundaries. — Pending structural parser validation.
 - Identify payload and any compression format.
 - Extract the kernel to a separate file.
 - Verify whether the extracted object is a Mach-O ARMv7 kernel.
 - Inspect Mach-O load commands and platform metadata.
 
-## Next read-only commands
+## Next read-only step
 
-Run on the **Mac**:
-
-~~~sh
-xxd -s 0 -l 256 ~/Desktop/iPad3-Research/kernelcache
-shasum -a 256 ~/Desktop/iPad3-Research/kernelcache
-~~~
-
-The hex dump gives more context for the container and tag layout. The SHA-256 value will serve as an artifact fingerprint. These commands do not contact or modify the iPad.
+Run a local parser on the Mac to enumerate and validate every IMG3 tag boundary. This can be done with Python using only the local file; it does not contact or modify the iPad. Do not extract or alter the source file until the parser output has been checked.
 
 Do not overwrite the original kernelcache. Any extraction should write to a new path in ~/Desktop/iPad3-Research/.
 
