@@ -199,3 +199,11 @@ Mixed-bundle SHA-256:
 ```
 
 The replacement entries were verified byte-for-byte against the target IPSW. This bundle is a controlled comparison artifact, not a compatibility result: its signatures, digests, kernel/platform pairing, and restore metadata are expected to be invalid or inconsistent. No device-side test was performed.
+
+## Manifest-routing audit after the mixed bundle (2026-11-17)
+
+The donor BuildManifest contains six build identities for device classes `p102ap`, `p103ap`, and `p101ap`, all pointing to the iPad4 kernelcache and iPad4 device-tree paths. The target BuildManifest contains two `j1ap` identities and only supports `iPad3,1`.
+
+The mixed bundle changes its top-level `SupportedProductTypes` to `iPad3,1`, but intentionally retains the donor's six P101/P102/P103 identities. This is a deliberate warning: the mixed bundle is not even a coherent restore manifest, in addition to having invalid payload signatures and an A6X donor kernel. It must remain analysis-only.
+
+No further manifest edits will be treated as a compatibility fix. A genuinely coherent port would require a new, target-specific manifest whose component digests, signing/personalization data, kernel, device tree, boot chain, and userspace all agree; the current evidence does not provide that.
