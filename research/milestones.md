@@ -25,7 +25,7 @@ Status meanings: Complete = reproduced and documented. Partial = meaningful evid
 | 14 | Compare manifest component metadata | Complete | Donor identities are P101/P102/P103; target identities are J1AP. Donor and target component metadata differ. |
 | 15 | Build compatibility matrix | Complete | Kernel, device tree, boot chain, display, WLAN, NAND, USB, and driver differences are documented in research/ios10-base-compatibility.md. |
 | 16 | Identify compatible iOS 10 userspace components | Partial | Donor system image is readable UDZO; target system image begins encrcdsa and remains uninspected without decryption. No runtime test has been performed. |
-| 17 | Obtain an A5X/J1AP iOS 10 kernel reference | Blocked | No genuine iOS 10 J1AP/A5X kernel reference has been established. The donor kernel is A6X/ARMv7s-oriented. |
+| 17 | Obtain an A5X/J1AP iOS 10 kernel reference | Blocked | Public-source survey found no iOS 10 J1AP/A5X IPSW or kernelcache; public references list iOS 9.3.6 as the latest compatible release. A private/unreleased artifact cannot be ruled out. |
 | 18 | Resolve signing/personalization requirements | Partial | Manifest and IMG3 signing relationships are understood at a high level; no signing keys, personalization, or bypass has been attempted. |
 | 19 | Create offline analysis bundles | Complete | Manifest-only and mixed-component bundles were created with explicit NONINSTALLABLE warnings. |
 | 20 | Establish recovery gate for hardware testing | Blocked | No safe, validated bootable image or recovery procedure exists; no hardware experiment is authorized by the evidence. |
