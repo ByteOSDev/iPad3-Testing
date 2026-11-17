@@ -83,3 +83,22 @@ Determine the DATA payload's encoding and whether it is compressed. Select a saf
 - Documented downloaded kernelcache and preliminary IMG3 identification.
 - Recorded preservation requirements and outstanding analysis tasks.
 - No kernel extraction, iOS 10 comparison, or boot experiment has been completed.
+
+
+## DATA payload inspection — 2026-11-17
+
+Read-only Mac-side analysis recorded:
+- DATA payload size: 10,673,026 bytes.
+- Unique byte values: 256 / 256.
+- Shannon entropy: 8.0000 bits/byte.
+- First 16 bytes: `eef6429855e61ce16a030bee60bfe2e9`.
+- Raw signature counts: GZIP 146, XZ 0, BZIP2 2, LZ4 0, LZMA 0, ZLIB 164.
+
+The first GZIP-like match at payload-relative offset `0x11d4c` is invalid: compression method `0xfa` (250) is not GZIP's required DEFLATE method 8, and flags `0xeb` set reserved bits. This is a false positive, not a verified GZIP stream. Other raw signature matches have not been structurally validated.
+
+**Current assessment:** high entropy is consistent with encryption but does not prove it; compression has not been identified or excluded. The AES-256 KBAG metadata is confirmed, but the DATA payload remains undecrypted and unextracted.
+
+No decompression, extraction, decryption, or device-side changes were performed. Do not attempt to decompress the invalid candidate.
+
+### Next step
+Identify a format-aware, auditable parser for this Apple kernelcache generation. Preserve the original file and direct any future extraction to a separate output path.
