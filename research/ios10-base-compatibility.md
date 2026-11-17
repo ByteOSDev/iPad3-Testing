@@ -176,3 +176,26 @@ ba77aa2cb54f3a99e67393eb55d3c845650c5129465f93aadd71c2856c1dcfd6
 4. Analyze J1AP device-tree and boot-chain requirements separately from iOS 10 userspace.
 5. Treat any component replacement as requiring signature/personalization analysis; do not assume a ZIP edit creates a bootable image.
 6. Only consider a device-side experiment if static compatibility evidence and a recoverable test path exist.
+
+## Mixed-component research bundle (2026-11-17)
+
+Per the experiment choice, a second offline artifact was created from the verified iPad4 donor copy. It is explicitly labeled `NONINSTALLABLE` and contains a README warning against restore or boot use.
+
+The following donor paths were replaced with byte-for-byte copies from the iPad3,1 IPSW:
+
+- `DeviceTree.p101ap.img3` ← J1AP `DeviceTree.j1ap.img3`
+- `iBoot.ipad3b.RELEASE.img3` ← J1 `iBoot.j1.RELEASE.img3`
+- `LLB.ipad3b.RELEASE.img3` ← J1 `LLB.j1.RELEASE.img3`
+- `iBEC.ipad3b.RELEASE.dfu` ← J1 `iBEC.j1.RELEASE.dfu`
+- `iBSS.ipad3b.RELEASE.dfu` ← J1 `iBSS.j1.RELEASE.dfu`
+- Apple-logo, battery, glyph, and recovery display images ← corresponding S5L8945X/J1AP images
+
+The donor iOS 10.3.2 userspace, disk images, A6X/ARMv7s kernelcache, modem assets, and all unreviewed components were left unchanged. The manifest was marked for `iPad3,1` only and tagged `NONINSTALLABLE`.
+
+Mixed-bundle SHA-256:
+
+```
+91994303694c367d2a7691ebdbfaa34e39dca591ede1e90c4549a112df62161e
+```
+
+The replacement entries were verified byte-for-byte against the target IPSW. This bundle is a controlled comparison artifact, not a compatibility result: its signatures, digests, kernel/platform pairing, and restore metadata are expected to be invalid or inconsistent. No device-side test was performed.
