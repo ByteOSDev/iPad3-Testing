@@ -81,7 +81,7 @@ The file utility reports generic data. The first 64 bytes from xxd begin with:
 00000030: 0000 0000 4154 4144 9cdb a200 82db a200  ....ATAD....
 ~~~
 
-The leading bytes 33 67 6d 49 correspond to ASCII 3gmI, the little-endian representation of the IMG3 magic. The IMG3 identification is now confirmed by the header and a full tag parse. The parser found `TYPE`, `DATA`, `SEPO`, and two `KBAG` tags, and reached the exact file end (`0xa2dc8c`) with all bytes accounted for. `SEPO` is Security Epoch metadata. Each KBAG contains 56 bytes, consistent with the documented AES-256 keybag layout, but its `aesType` field has not yet been inspected, so AES-256 remains unconfirmed. The DATA payload has not been decrypted, decompressed, or extracted.
+The leading bytes 33 67 6d 49 correspond to ASCII 3gmI, the little-endian representation of the IMG3 magic. The IMG3 identification is confirmed by the header and full tag parse. The parser found `TYPE`, `DATA`, `SEPO`, and two `KBAG` tags, and reached the exact file end (`0xa2dc8c`) with all bytes accounted for. The SEPO value was read as `16`. Both KBAG entries report `aesType=0x100` (AES-256); their `cryptState` values are `0x1` (production GID-key state) and `0x2` (development GID-key state), respectively. These values identify the keybag metadata types, not the key material. The DATA payload has not been decrypted, decompressed, or extracted.
 
 The 256-byte header dump and SHA-256 fingerprint have now been collected. The digest is `232caa3bfe34ff0ba841dd7c1e3a918aafd1b4376ead82f66f292c8d49d4021e`; the Mac reports a size of approximately 10 MB. The IMG3 header decodes to `fullSize=0x00a2dc8c`, `sizeNoPack=0x00a2dc78`, `sigCheckArea=0x00a2dc78`, and image identifier `krnl`. The first tags are `TYPE` (value `krnl`) and `DATA` (tag total length `0x00a2db9c`, data length `0x00a2db82`). Full tag-boundary validation is complete: all tags end exactly at the file boundary. The kernelcache has not been extracted or modified. See [research/kernelcache.md](research/kernelcache.md).
 
@@ -140,10 +140,14 @@ See [research/methodology.md](research/methodology.md).
 
 ## 8. Current status and immediate next step
 
-The IMG3 container structure is now validated. The next step is to inspect the documented metadata fields at the start of each KBAG and the SEPO value, without printing the encrypted IV/key bytes. Then determine what can be established about payload encoding and compression and identify a safe Mac-side inspection method.
-4. Extract to a new output file; never overwrite the original.
-5. Determine whether the extracted data is a Mach-O ARMv7 kernel and inspect metadata.
-6. Obtain a legitimate iOS 10 kernelcache from a supported 32-bit device for comparison, where legally and practically available.
+The IMG3 container structure and metadata fields have been inspected. The confirmed values are SEPO `16`, and two AES-256 KBAG entries (`aesType=0x100`) with `cryptState` values `0x1` and `0x2` (production and development GID-key states, respectively). Only metadata fields were read; encrypted IV/key bytes were not printed. The DATA payload remains unextracted, undecrypted, and not yet classified for compression.
+
+Next steps:
+1. Determine the DATA payload's encoding and whether it is compressed.
+2. Identify a safe, auditable Mac-side parser/extraction method.
+3. If appropriate, extract to a new output file; never overwrite the original.
+4. Determine whether the extracted data is a Mach-O ARMv7 kernel and inspect its metadata.
+5. Obtain a legitimate iOS 10 kernelcache from a supported 32-bit device for comparison, where legally and practically available.
 7. Compare kernel/platform information before making boot-compatibility claims.
 
 See [research/status.md](research/status.md).
