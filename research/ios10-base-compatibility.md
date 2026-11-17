@@ -301,3 +301,20 @@ This is evidence that the donor kernelcache embeds a large, platform-specific pr
 The `Digest` fields printed from Apple BuildManifest entries were compared with raw SHA-1 values of archive members. They do not equal the raw member SHA-1s, so this research does **not** interpret them as simple file hashes. They may represent Apple-specific payload/signature digest inputs.
 
 The mixed bundle nevertheless retains the donor manifest's original digest metadata while replacing the corresponding component bytes with J1AP files. No digest recalculation, signing, or personalization was performed. The bundle remains non-installable and analysis-only.
+
+## Userspace and restore-image inventory (2026-11-17)
+
+The donor and target IPSWs contain different restore-image layouts:
+
+| Item | iPad4 donor 10.3.2 / 14F89 | iPad3,1 target 9.3.5 / 13G36 |
+|---|---|---|
+| User system image | 1,862,226,470 bytes uncompressed | 1,615,699,968 bytes uncompressed |
+| User ramdisk | 24,735,884 bytes uncompressed | 20,775,180 bytes uncompressed |
+| Update ramdisk | 25,587,852 bytes uncompressed | 21,602,572 bytes uncompressed |
+| Kernel mapping | platform ipad3b | target j1 |
+| Ramdisk platform | s5l8950x | s5l8945x |
+| Minimum system partition | 2367 | 2074 |
+
+The donor's larger iOS 10 system image cannot be assumed to fit the target's iOS 9.3.5 partition layout. The donor and target also use different kernel/ramdisk platform keys and different restore-image mappings. This is a userspace/restore-layout compatibility concern in addition to the kernel and boot-chain mismatch.
+
+No DMG was mounted, modified, or installed. The next useful userspace step is offline filesystem inventory of copied DMGs, if a suitable read-only DMG inspection tool is available.
