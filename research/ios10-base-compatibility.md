@@ -398,3 +398,21 @@ References:
 - Inspected its declared architecture/configuration and embedded-build dependencies.
 - Performed one non-device `all_embedded` build check; it stopped at the expected unavailable Apple-internal SDK/tooling boundary.
 - Recorded that no target ARMv7/J1AP kernel was built and no device or firmware artifact was changed.
+
+## Explicit iOS 10 ARM target check (2026-11-18)
+
+The iOS 10-era public source was tested with an explicit target request:
+
+```
+make -j1 SDKROOT=/ HOST_SDKROOT=/ ARCH_CONFIGS=ARM KERNEL_CONFIGS=RELEASE MACHINE_CONFIGS=S5L8945X all
+```
+
+The build reached the kernel target-selection stage and stopped with:
+
+```
+Unsupported CURRENT_ARCH_CONFIG ARM
+```
+
+It also reported unavailable `migcom`, `ctfconvert`, and `ctfmerge` tools. This is stronger than a generic missing-SDK failure: even when an ARM/J1AP-like configuration is supplied manually, the public source rejects ARM as an unsupported architecture configuration before compilation. The source therefore cannot produce an iPad3,1 kernel by changing make variables alone.
+
+The result was generated in temporary source storage only. No IPSW, kernelcache, signing data, or device was changed.
