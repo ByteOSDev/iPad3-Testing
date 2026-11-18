@@ -416,3 +416,13 @@ Unsupported CURRENT_ARCH_CONFIG ARM
 It also reported unavailable `migcom`, `ctfconvert`, and `ctfmerge` tools. This is stronger than a generic missing-SDK failure: even when an ARM/J1AP-like configuration is supplied manually, the public source rejects ARM as an unsupported architecture configuration before compilation. The source therefore cannot produce an iPad3,1 kernel by changing make variables alone.
 
 The result was generated in temporary source storage only. No IPSW, kernelcache, signing data, or device was changed.
+
+## Additional public analysis-tool survey (2026-11-18)
+
+Several public tools can improve offline analysis, but none supplies the missing iOS 10 J1AP kernel:
+
+- [ioskextdump_32](https://github.com/cocoahuke/ioskextdump_32) documents 32-bit kernelcache/kext inspection and includes an iOS 9-era sample workflow. It is relevant to analyzing a decoded ARMv7 kernel, not to creating one.
+- [blacktop/ipsw device list](https://blacktop.github.io/ipsw/docs/guides/device_list/) records the target mapping as `iPad3,1 / j1ap / s5l8945x / armv7` and the donor mapping as `iPad3,4 / p101ap / s5l8955x / armv7s`.
+- [ios-kexec-utils](https://github.com/axi0mX/ios-kexec-utils) documents ARMv7 tooling for already-jailbroken iOS 4.0–9.3.5 devices. It requires a jailbroken device and a kernel patch; it is not a safe substitute for a signed iOS 10 kernel and was not run.
+
+These sources reinforce the existing conclusion: public tooling can inspect or load known ARMv7 artifacts under special conditions, but it does not provide the proprietary J1AP iOS 10 kernel, board configuration, drivers, or signing path. No device-side tool was executed.
