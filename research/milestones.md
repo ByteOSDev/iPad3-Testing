@@ -61,3 +61,7 @@ This closes the safe research/documentation work currently possible without decr
 ## Latest update — 2026-11-17 (public source build check)
 
 Milestone 17 was tested against Apple’s public historical XNU source rather than treated as an assumption. The official `xnu-3248.60.10` source archive was retrieved and hashed in a disposable directory. Its `all_embedded` build entry point requires `macosx.internal`, Apple-internal toolchain components, and an embedded device map; its declared supported architecture configurations are `X86_64` and `X86_64H`, not ARMv7/J1AP. The one build-feasibility invocation stopped before target selection, and no artifact was used or retained as firmware. This confirms that the public release cannot serve as a from-scratch A5X/J1AP iOS 10 kernel build kit.
+
+## Latest update — 2026-11-18 (explicit ARM target check)
+
+The iOS 10-era public XNU source was invoked with `ARCH_CONFIGS=ARM` and `MACHINE_CONFIGS=S5L8945X`. After the expected missing-tool warnings, the kernel make rules rejected the request as `Unsupported CURRENT_ARCH_CONFIG ARM`. This confirms that the public tree cannot be converted into an ARM/J1AP kernel through make-variable changes alone.
