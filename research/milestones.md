@@ -65,3 +65,7 @@ Milestone 17 was tested against Apple’s public historical XNU source rather th
 ## Latest update — 2026-11-18 (explicit ARM target check)
 
 The iOS 10-era public XNU source was invoked with `ARCH_CONFIGS=ARM` and `MACHINE_CONFIGS=S5L8945X`. After the expected missing-tool warnings, the kernel make rules rejected the request as `Unsupported CURRENT_ARCH_CONFIG ARM`. This confirms that the public tree cannot be converted into an ARM/J1AP kernel through make-variable changes alone.
+
+## Latest update — 2026-11-18 (public analysis tools)
+
+The public-tool survey identified usable offline references for 32-bit kernelcache inspection and device mapping. These tools support analysis of decoded ARMv7 artifacts but do not provide a J1AP iOS 10 kernel or a signing path. No jailbreak, kexec, boot, or device-side tool was run.
