@@ -426,3 +426,14 @@ Several public tools can improve offline analysis, but none supplies the missing
 - [ios-kexec-utils](https://github.com/axi0mX/ios-kexec-utils) documents ARMv7 tooling for already-jailbroken iOS 4.0–9.3.5 devices. It requires a jailbroken device and a kernel patch; it is not a safe substitute for a signed iOS 10 kernel and was not run.
 
 These sources reinforce the existing conclusion: public tooling can inspect or load known ARMv7 artifacts under special conditions, but it does not provide the proprietary J1AP iOS 10 kernel, board configuration, drivers, or signing path. No device-side tool was executed.
+
+## Public source-tree coverage check (2026-11-18)
+
+A literal search of the downloaded public `xnu-3789.60.24` tree found:
+
+- 3,604 source files.
+- 315 files with generic ARM references.
+- **0** files mentioning `S5L8945`, `S5L8950`, or `S5L8955`.
+- **0** files mentioning the donor kernel's platform-driver identifiers `AppleARMPlatform`, `AppleA5AE2`, `AppleH5GCLCD`, or `AppleNAND`.
+
+This is a source-coverage check, not a claim that those strings are required in every implementation. Combined with the decoded donor prelink inventory, it does demonstrate that the public XNU archive does not contain the platform-driver source corresponding to the hardware-specific code embedded in the iPad4 kernelcache. That missing code cannot be reconstructed by copying the iPad4 kernel or by changing the board name in a manifest.
