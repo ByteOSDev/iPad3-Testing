@@ -69,3 +69,7 @@ The iOS 10-era public XNU source was invoked with `ARCH_CONFIGS=ARM` and `MACHIN
 ## Latest update — 2026-11-18 (public analysis tools)
 
 The public-tool survey identified usable offline references for 32-bit kernelcache inspection and device mapping. These tools support analysis of decoded ARMv7 artifacts but do not provide a J1AP iOS 10 kernel or a signing path. No jailbreak, kexec, boot, or device-side tool was run.
+
+## Latest update — 2026-11-18 (source coverage)
+
+The public XNU 3789.60.24 tree was searched literally: it contains generic ARM code, but no S5L8945/S5L8950/S5L8955 identifiers and none of the donor kernel's platform-driver identifiers AppleARMPlatform, AppleA5AE2, AppleH5GCLCD, or AppleNAND. This confirms that the public source archive omits the hardware-specific driver source needed for a genuine J1AP/A5X port.
