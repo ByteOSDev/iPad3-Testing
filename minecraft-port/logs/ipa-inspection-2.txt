@@ -1,0 +1,869 @@
+~/Desktop/MC170-Inspection % unzip -p ~/Downloads/"minecraft 0.10.0.ipa" Payload/minecraftpe.app/Info.plist > /tmp/mc010-Info.plist
+plutil -lint /tmp/mc010-Info.plist
+/tmp/mc010-Info.plist: OK
+ ~/Desktop/MC170-Inspection % unzip -t ~/Downloads/"minecraft 0.10.0.ipa" | tail -5
+    testing: Payload/minecraftpe.app/silverfish_hit2.m4a   OK
+    testing: Payload/minecraftpe.app/grass4.pcm   OK
+    testing: Payload/minecraftpe.app/glyph_AD.png   OK
+    testing: Payload/minecraftpe.app/sheep_4.png   OK
+No errors detected in compressed data of /Users/alisonrinder/Downloads/minecraft 0.10.0.ipa.
+ ~/Desktop/MC170-Inspection % plutil -p /tmp/mc010-Info.plist
+{
+  "BuildMachineOSBuild" => "14A389"
+  "CFBundleDevelopmentRegion" => "en"
+  "CFBundleDisplayName" => "Minecraft PE"
+  "CFBundleExecutable" => "minecraftpe"
+  "CFBundleIcons" => {
+    "CFBundlePrimaryIcon" => {
+      "CFBundleIconFiles" => [
+        0 => "Icon-120"
+        1 => "Icon-114"
+        2 => "Icon-57"
+      ]
+      "UIPrerenderedIcon" => true
+    }
+  }
+  "CFBundleIcons~ipad" => {
+    "CFBundlePrimaryIcon" => {
+      "CFBundleIconFiles" => [
+        0 => "Icon-152"
+        1 => "Icon-76"
+        2 => "Icon-144"
+        3 => "Icon"
+        4 => "Icon-120"
+        5 => "Icon-114"
+        6 => "Icon-57"
+      ]
+      "UIPrerenderedIcon" => true
+    }
+  }
+  "CFBundleIdentifier" => "com.mojang.minecraftpe"
+  "CFBundleInfoDictionaryVersion" => "6.0"
+  "CFBundleName" => "Minecraft PE"
+  "CFBundlePackageType" => "APPL"
+  "CFBundleShortVersionString" => "0.10.0"
+  "CFBundleSignature" => "????"
+  "CFBundleSupportedPlatforms" => [
+    0 => "iPhoneOS"
+  ]
+  "CFBundleVersion" => "0.10.0"
+  "DTCompiler" => "com.apple.compilers.llvm.clang.1_0"
+  "DTPlatformBuild" => "12B411"
+  "DTPlatformName" => "iphoneos"
+  "DTPlatformVersion" => "8.1"
+  "DTSDKBuild" => "12B411"
+  "DTSDKName" => "iphoneos8.1"
+  "DTXcode" => "0610"
+  "DTXcodeBuild" => "6A1052d"
+  "LSApplicationCategoryType" => ""
+  "LSRequiresIPhoneOS" => true
+  "MinimumOSVersion" => "5.1.1"
+  "NSMainNibFile" => "MainWindow"
+  "UIAppFonts" => [
+    0 => "minecraft.ttf"
+  ]
+  "UIDeviceFamily" => [
+    0 => 1
+    1 => 2
+  ]
+  "UILaunchImages" => [
+    0 => {
+      "UILaunchImageMinimumOSVersion" => "7.0"
+      "UILaunchImageName" => "Default"
+      "UILaunchImageOrientation" => "Portrait"
+      "UILaunchImageSize" => "{320, 568}"
+    }
+    1 => {
+      "UILaunchImageMinimumOSVersion" => "7.0"
+      "UILaunchImageName" => "Default"
+      "UILaunchImageOrientation" => "Portrait"
+      "UILaunchImageSize" => "{320, 480}"
+    }
+  ]
+  "UILaunchImages~ipad" => [
+    0 => {
+      "UILaunchImageMinimumOSVersion" => "7.0"
+      "UILaunchImageName" => "Default-Landscape"
+      "UILaunchImageOrientation" => "Landscape"
+      "UILaunchImageSize" => "{768, 1024}"
+    }
+    1 => {
+      "UILaunchImageMinimumOSVersion" => "7.0"
+      "UILaunchImageName" => "Default-Landscape"
+      "UILaunchImageOrientation" => "Landscape"
+      "UILaunchImageSize" => "{768, 1024}"
+    }
+    2 => {
+      "UILaunchImageMinimumOSVersion" => "7.0"
+      "UILaunchImageName" => "Default"
+      "UILaunchImageOrientation" => "Portrait"
+      "UILaunchImageSize" => "{320, 568}"
+    }
+    3 => {
+      "UILaunchImageMinimumOSVersion" => "7.0"
+      "UILaunchImageName" => "Default"
+      "UILaunchImageOrientation" => "Portrait"
+      "UILaunchImageSize" => "{320, 480}"
+    }
+  ]
+  "UIPrerenderedIcon" => true
+  "UIRequiresPersistentWiFi" => true
+  "UIStatusBarHidden" => true
+  "UISupportedInterfaceOrientations" => [
+    0 => "UIInterfaceOrientationLandscapeLeft"
+    1 => "UIInterfaceOrientationLandscapeRight"
+  ]
+  "UIViewControllerBasedStatusBarAppearance" => false
+}
+ ~/Desktop/MC170-Inspection % unzip -p ~/Downloads/"minecraft 0.10.0.ipa" Payload/minecraftpe.app/minecraftpe > /tmp/mc010-executable
+file /tmp/mc010-executable
+lipo -info /tmp/mc010-executable
+/tmp/mc010-executable: Mach-O universal binary with 2 architectures: [arm_v7:
+- Mach-O executable arm_v7] [arm64]
+/tmp/mc010-executable (for architecture armv7):	Mach-O executable arm_v7
+/tmp/mc010-executable (for architecture arm64):	Mach-O 64-bit executable arm64
+Architectures in the fat file: /tmp/mc010-executable are: armv7 arm64 
+ ~/Desktop/MC170-Inspection % unzip -l ~/Downloads/"minecraft 0.10.0.ipa" | grep -E 'Info.plist|embedded.mobileprovision|Payload/'
+     4269  11-12-2014 06:12   Payload/minecraftpe.app/glyph_BE.png
+     4183  11-12-2014 06:12   Payload/minecraftpe.app/glyph_D2.png
+     4765  11-12-2014 06:12   Payload/minecraftpe.app/glyph_CA.png
+     7407  11-12-2014 06:12   Payload/minecraftpe.app/sheep_9.png
+    51233  11-12-2014 06:12   Payload/minecraftpe.app/Icon-152.png
+     4817  11-12-2014 06:12   Payload/minecraftpe.app/grass3.m4a
+     1301  11-12-2014 06:12   Payload/minecraftpe.app/iron_1.png
+     8236  11-12-2014 06:12   Payload/minecraftpe.app/spider.tga
+     9040  11-12-2014 06:12   Payload/minecraftpe.app/zpigangry4.m4a
+    57088  11-12-2014 06:12   Payload/minecraftpe.app/pop2.pcm
+   634908  11-12-2014 06:12   Payload/minecraftpe.app/zombie1.pcm
+     3516  11-12-2014 06:12   Payload/minecraftpe.app/villager_idle3.m4a
+      712  11-12-2014 06:12   Payload/minecraftpe.app/entity.material
+     4707  11-12-2014 06:12   Payload/minecraftpe.app/glyph_17.png
+     3511  11-12-2014 06:12   Payload/minecraftpe.app/glyph_03.png
+    10037  11-12-2014 06:12   Payload/minecraftpe.app/glyph_6D.png
+     1379  11-12-2014 06:12   Payload/minecraftpe.app/cloth_1.png
+     3918  11-12-2014 06:12   Payload/minecraftpe.app/InAppSettings.bundle/en.lproj/Root.strings
+     2765  11-12-2014 06:12   Payload/minecraftpe.app/InAppSettings.bundle/userDefault.plist
+     1734  11-12-2014 06:12   Payload/minecraftpe.app/InAppSettings.bundle/Advanced.plist
+     4054  11-12-2014 06:12   Payload/minecraftpe.app/InAppSettings.bundle/Root~ipad.plist
+    12351  11-12-2014 06:12   Payload/minecraftpe.app/InAppSettings.bundle/Complete.plist
+     3596  11-12-2014 06:12   Payload/minecraftpe.app/InAppSettings.bundle/Root.inApp.plist
+      780  11-12-2014 06:12   Payload/minecraftpe.app/InAppSettings.bundle/slow.png
+     4190  11-12-2014 06:12   Payload/minecraftpe.app/InAppSettings.bundle/Root.plist
+      965  11-12-2014 06:12   Payload/minecraftpe.app/InAppSettings.bundle/fast.png
+     4056  11-12-2014 06:12   Payload/minecraftpe.app/InAppSettings.bundle/Root~iphone.plist
+     4819  11-12-2014 06:12   Payload/minecraftpe.app/fallsmall.m4a
+    10518  11-12-2014 06:12   Payload/minecraftpe.app/glyph_6E.png
+     3745  11-12-2014 06:12   Payload/minecraftpe.app/glyph_02.png
+     4187  11-12-2014 06:12   Payload/minecraftpe.app/glyph_16.png
+    10124  11-12-2014 06:12   Payload/minecraftpe.app/glyph_7A.png
+     5759  11-12-2014 06:12   Payload/minecraftpe.app/villager_idle2.m4a
+      118  11-12-2014 06:12   Payload/minecraftpe.app/color_ex.fragment
+    12950  11-12-2014 06:12   Payload/minecraftpe.app/gui2.png
+   223249  11-12-2014 06:12   Payload/minecraftpe.app/wolf_whine.pcm
+   187667  11-12-2014 06:12   Payload/minecraftpe.app/slime_big4.pcm
+     6119  11-12-2014 06:12   Payload/minecraftpe.app/pigdeath.m4a
+     6015  11-12-2014 06:12   Payload/minecraftpe.app/chicken1.m4a
+     5309  11-12-2014 06:12   Payload/minecraftpe.app/grass2.m4a
+      311  11-12-2014 06:12   Payload/minecraftpe.app/cursor.png
+     3033  11-12-2014 06:12   Payload/minecraftpe.app/burp.m4a
+     6961  11-12-2014 06:12   Payload/minecraftpe.app/sheep_8.png
+    18261  11-12-2014 06:12   Payload/minecraftpe.app/fire.m4a
+     4349  11-12-2014 06:12   Payload/minecraftpe.app/glyph_D3.png
+     4270  11-12-2014 06:12   Payload/minecraftpe.app/glyph_BD.png
+     4307  11-12-2014 06:12   Payload/minecraftpe.app/glyph_CB.png
+     4409  11-12-2014 06:12   Payload/minecraftpe.app/glyph_BF.png
+     4378  11-12-2014 06:12   Payload/minecraftpe.app/glyph_D1.png
+    10919  11-12-2014 06:12   Payload/minecraftpe.app/glyph_F9.png
+     3320  11-12-2014 06:12   Payload/minecraftpe.app/sand4.m4a
+     9058  11-12-2014 06:12   Payload/minecraftpe.app/enderman_death.m4a
+   156881  11-12-2014 06:12   Payload/minecraftpe.app/enderman_portal2.pcm
+       73  11-12-2014 06:12   Payload/minecraftpe.app/color.fragment
+   103928  11-12-2014 06:12   Payload/minecraftpe.app/spider4.pcm
+     5173  11-12-2014 06:12   Payload/minecraftpe.app/chicken3.m4a
+      798  11-12-2014 06:12   Payload/minecraftpe.app/iron_2.png
+     1418  11-12-2014 06:12   Payload/minecraftpe.app/particles.png
+   165157  11-12-2014 06:12   Payload/minecraftpe.app/door_close.pcm
+     5339  11-12-2014 06:12   Payload/minecraftpe.app/gravel3.m4a
+   581232  11-12-2014 06:12   Payload/minecraftpe.app/zombie2.pcm
+     4446  11-12-2014 06:12   Payload/minecraftpe.app/glyph_00.png
+    10502  11-12-2014 06:12   Payload/minecraftpe.app/glyph_7C.png
+     3141  11-12-2014 06:12   Payload/minecraftpe.app/glyph_14.png
+     1669  11-12-2014 06:12   Payload/minecraftpe.app/glyph_28.png
+     1479  11-12-2014 06:12   Payload/minecraftpe.app/en.lproj/minecraftpeViewController.nib
+       42  11-12-2014 06:12   Payload/minecraftpe.app/en.lproj/InfoPlist.strings
+     1917  11-12-2014 06:12   Payload/minecraftpe.app/en.lproj/MainWindow.nib
+      890  11-12-2014 06:12   Payload/minecraftpe.app/cloth_2.png
+     3044  11-12-2014 06:12   Payload/minecraftpe.app/cloth4.m4a
+     4744  11-12-2014 06:12   Payload/minecraftpe.app/glyph_29.png
+     3885  11-12-2014 06:12   Payload/minecraftpe.app/glyph_15.png
+   510492  11-12-2014 06:12   Payload/minecraftpe.app/zpigdeath.pcm
+     8870  11-12-2014 06:12   Payload/minecraftpe.app/glyph_7B.png
+    10989  11-12-2014 06:12   Payload/minecraftpe.app/glyph_6F.png
+     4122  11-12-2014 06:12   Payload/minecraftpe.app/glyph_01.png
+   889676  11-12-2014 06:12   Payload/minecraftpe.app/zombie3.pcm
+     4452  11-12-2014 06:12   Payload/minecraftpe.app/villager_idle1.m4a
+     5567  11-12-2014 06:12   Payload/minecraftpe.app/gravel2.m4a
+     2447  11-12-2014 06:12   Payload/minecraftpe.app/default8.png
+      244  11-12-2014 06:12   Payload/minecraftpe.app/background.images
+     4673  11-12-2014 06:12   Payload/minecraftpe.app/grass1.m4a
+     7394  11-12-2014 06:12   Payload/minecraftpe.app/chicken2.m4a
+    47907  11-12-2014 06:12   Payload/minecraftpe.app/Icon-144.png
+     4220  11-12-2014 06:12   Payload/minecraftpe.app/glyph_D0.png
+     4706  11-12-2014 06:12   Payload/minecraftpe.app/glyph_CC.png
+     3339  11-12-2014 06:12   Payload/minecraftpe.app/sand1.m4a
+     4346  11-12-2014 06:12   Payload/minecraftpe.app/glyph_BC.png
+     4283  11-12-2014 06:12   Payload/minecraftpe.app/glyph_D4.png
+   205066  11-12-2014 06:12   Payload/minecraftpe.app/spider1.pcm
+     4271  11-12-2014 06:12   Payload/minecraftpe.app/pig1.m4a
+   195093  11-12-2014 06:12   Payload/minecraftpe.app/slime_big3.pcm
+     3918  11-12-2014 06:12   Payload/minecraftpe.app/zpigangry2.m4a
+     7279  11-12-2014 06:12   Payload/minecraftpe.app/zombiedeath.m4a
+    69054  11-12-2014 06:12   Payload/minecraftpe.app/enderman_stare.m4a
+   130518  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_hit3.pcm
+     8160  11-12-2014 06:12   Payload/minecraftpe.app/title.png
+    10758  11-12-2014 06:12   Payload/minecraftpe.app/glyph_39.png
+     3269  11-12-2014 06:12   Payload/minecraftpe.app/glyph_05.png
+    10697  11-12-2014 06:12   Payload/minecraftpe.app/glyph_6B.png
+    10323  11-12-2014 06:12   Payload/minecraftpe.app/glyph_7F.png
+     3644  11-12-2014 06:12   Payload/minecraftpe.app/glyph_11.png
+     3035  11-12-2014 06:12   Payload/minecraftpe.app/cloth1.m4a
+     1249  11-12-2014 06:12   Payload/minecraftpe.app/butcher.png
+     4495  11-12-2014 06:12   Payload/minecraftpe.app/glyph_10.png
+     9320  11-12-2014 06:12   Payload/minecraftpe.app/glyph_6C.png
+     4299  11-12-2014 06:12   Payload/minecraftpe.app/glyph_04.png
+   114942  11-12-2014 06:12   Payload/minecraftpe.app/break.pcm
+    10313  11-12-2014 06:12   Payload/minecraftpe.app/glyph_38.png
+     5555  11-12-2014 06:12   Payload/minecraftpe.app/explode.m4a
+     2892  11-12-2014 06:12   Payload/minecraftpe.app/eat1.m4a
+     1241  11-12-2014 06:12   Payload/minecraftpe.app/smith.png
+   126182  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_hit2.pcm
+   143257  11-12-2014 06:12   Payload/minecraftpe.app/slime_big2.pcm
+     7977  11-12-2014 06:12   Payload/minecraftpe.app/zpigangry3.m4a
+     4858  11-12-2014 06:12   Payload/minecraftpe.app/grass4.m4a
+     4527  11-12-2014 06:12   Payload/minecraftpe.app/glyph_D5.png
+     4206  11-12-2014 06:12   Payload/minecraftpe.app/glyph_BB.png
+     4318  11-12-2014 06:12   Payload/minecraftpe.app/glyph_CF.png
+     2888  11-12-2014 06:12   Payload/minecraftpe.app/sand2.m4a
+   524306  11-12-2014 06:12   Payload/minecraftpe.app/terrain-atlas.tga
+     3153  11-12-2014 06:12   Payload/minecraftpe.app/glyph_D7.png
+     4673  11-12-2014 06:12   Payload/minecraftpe.app/glyph_CD.png
+   145699  11-12-2014 06:12   Payload/minecraftpe.app/spider2.pcm
+      109  11-12-2014 06:12   Payload/minecraftpe.app/sad.material
+     4956  11-12-2014 06:12   Payload/minecraftpe.app/pig2.m4a
+      294  11-12-2014 06:12   Payload/minecraftpe.app/startup.images
+      633  11-12-2014 06:12   Payload/minecraftpe.app/shadows.material
+   393861  11-12-2014 06:12   Payload/minecraftpe.app/spiderdeath.pcm
+     7308  11-12-2014 06:12   Payload/minecraftpe.app/zpigangry1.m4a
+     2947  11-12-2014 06:12   Payload/minecraftpe.app/eat3.m4a
+     1610  11-12-2014 06:12   Payload/minecraftpe.app/librarian.png
+    11455  11-12-2014 06:12   Payload/minecraftpe.app/Icon@2x~iphone.png
+    32399  11-12-2014 06:12   Payload/minecraftpe.app/items-opaque.png
+    10987  11-12-2014 06:12   Payload/minecraftpe.app/glyph_7E.png
+     4881  11-12-2014 06:12   Payload/minecraftpe.app/glyph_12.png
+     4022  11-12-2014 06:12   Payload/minecraftpe.app/glyph_06.png
+    11509  11-12-2014 06:12   Payload/minecraftpe.app/glyph_6A.png
+     7111  11-12-2014 06:12   Payload/minecraftpe.app/creeperdeath.m4a
+     3111  11-12-2014 06:12   Payload/minecraftpe.app/cloth3.m4a
+     3051  11-12-2014 06:12   Payload/minecraftpe.app/cloth2.m4a
+     3827  11-12-2014 06:12   Payload/minecraftpe.app/glyph_07.png
+     4777  11-12-2014 06:12   Payload/minecraftpe.app/glyph_13.png
+    10422  11-12-2014 06:12   Payload/minecraftpe.app/glyph_7D.png
+     5524  11-12-2014 06:12   Payload/minecraftpe.app/gravel4.m4a
+     3023  11-12-2014 06:12   Payload/minecraftpe.app/eat2.m4a
+      203  11-12-2014 06:12   Payload/minecraftpe.app/uv1.vertex
+   212286  11-12-2014 06:12   Payload/minecraftpe.app/slime_big1.pcm
+   147373  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_hit1.pcm
+      401  11-12-2014 06:12   Payload/minecraftpe.app/color_texture.fragment
+     3971  11-12-2014 06:12   Payload/minecraftpe.app/pig3.m4a
+   153251  11-12-2014 06:12   Payload/minecraftpe.app/spider3.pcm
+     4556  11-12-2014 06:12   Payload/minecraftpe.app/glyph_CE.png
+     4794  11-12-2014 06:12   Payload/minecraftpe.app/glyph_D6.png
+     4285  11-12-2014 06:12   Payload/minecraftpe.app/glyph_BA.png
+     4002  11-12-2014 06:12   Payload/minecraftpe.app/bow.m4a
+     4643  11-12-2014 06:12   Payload/minecraftpe.app/wolf_death.m4a
+   152404  11-12-2014 06:12   Payload/minecraftpe.app/chestopen.pcm
+    22880  11-12-2014 06:12   Payload/minecraftpe.app/Default.png
+     3172  11-12-2014 06:12   Payload/minecraftpe.app/sand3.m4a
+     4204  11-12-2014 06:12   Payload/minecraftpe.app/glyph_B1.png
+   113662  11-12-2014 06:12   Payload/minecraftpe.app/wolf_hurt1.pcm
+     4295  11-12-2014 06:12   Payload/minecraftpe.app/glyph_C5.png
+   128112  11-12-2014 06:12   Payload/minecraftpe.app/wood3.pcm
+   166517  11-12-2014 06:12   Payload/minecraftpe.app/skeleton2.pcm
+      203  11-12-2014 06:12   Payload/minecraftpe.app/uv.vertex
+     3596  11-12-2014 06:12   Payload/minecraftpe.app/enderman_hit1.m4a
+   222134  11-12-2014 06:12   Payload/minecraftpe.app/enderman_idle3.pcm
+   331760  11-12-2014 06:12   Payload/minecraftpe.app/wolf_growl2.pcm
+    14152  11-12-2014 06:12   Payload/minecraftpe.app/fuse.m4a
+     5171  11-12-2014 06:12   Payload/minecraftpe.app/wolf_tame.png
+     5507  11-12-2014 06:12   Payload/minecraftpe.app/stone4.m4a
+     6246  11-12-2014 06:12   Payload/minecraftpe.app/Icon-40.png
+   208727  11-12-2014 06:12   Payload/minecraftpe.app/door_open.pcm
+   106540  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_say4.pcm
+     2701  11-12-2014 06:12   Payload/minecraftpe.app/slime_small4.m4a
+    99794  11-12-2014 06:12   Payload/minecraftpe.app/wolf_bark1.pcm
+    42528  11-15-2014 12:18   Payload/minecraftpe.app/SC_Info/minecraftpe.supf
+     1056  10-04-2022 12:34   Payload/minecraftpe.app/SC_Info/minecraftpe.sinf
+    55396  11-15-2014 12:18   Payload/minecraftpe.app/SC_Info/minecraftpe.supp
+      369  11-15-2014 12:18   Payload/minecraftpe.app/SC_Info/Manifest.plist
+     3891  11-12-2014 06:12   Payload/minecraftpe.app/creeper3.m4a
+    10805  11-12-2014 06:12   Payload/minecraftpe.app/glyph_74.png
+     2472  11-12-2014 06:12   Payload/minecraftpe.app/glyph_1C.png
+    10049  11-12-2014 06:12   Payload/minecraftpe.app/glyph_60.png
+    10717  11-12-2014 06:12   Payload/minecraftpe.app/glyph_48.png
+     2568  11-12-2014 06:12   Payload/minecraftpe.app/villager_hit4.m4a
+     7586  11-12-2014 06:12   Payload/minecraftpe.app/zpig1.m4a
+    10657  11-12-2014 06:12   Payload/minecraftpe.app/glyph_49.png
+    26359  11-12-2014 06:12   Payload/minecraftpe.app/gui.png
+    11054  11-12-2014 06:12   Payload/minecraftpe.app/glyph_61.png
+     1620  11-12-2014 06:12   Payload/minecraftpe.app/priest.png
+     4163  11-12-2014 06:12   Payload/minecraftpe.app/glyph_0F.png
+     8321  11-12-2014 06:12   Payload/minecraftpe.app/clouds.png
+     3889  11-12-2014 06:12   Payload/minecraftpe.app/creeper2.m4a
+     3715  11-12-2014 06:12   Payload/minecraftpe.app/glyph_1B.png
+     9403  11-12-2014 06:12   Payload/minecraftpe.app/glyph_75.png
+     2371  11-12-2014 06:12   Payload/minecraftpe.app/slime_small5.m4a
+   161455  11-12-2014 06:12   Payload/minecraftpe.app/iTunesArtwork@2x
+   250954  11-12-2014 06:12   Payload/minecraftpe.app/enderman_scream4.pcm
+   413741  11-12-2014 06:12   Payload/minecraftpe.app/zombiehurt2.pcm
+   495015  11-12-2014 06:12   Payload/minecraftpe.app/wolf_growl3.pcm
+   147888  11-12-2014 06:12   Payload/minecraftpe.app/enderman_idle2.pcm
+   160011  11-12-2014 06:12   Payload/minecraftpe.app/skeleton3.pcm
+   116283  11-12-2014 06:12   Payload/minecraftpe.app/wood2.pcm
+     7933  11-12-2014 06:12   Payload/minecraftpe.app/fizz.m4a
+     5816  11-12-2014 06:12   Payload/minecraftpe.app/fallbig2.m4a
+     4357  11-12-2014 06:12   Payload/minecraftpe.app/glyph_C4.png
+     4153  11-12-2014 06:12   Payload/minecraftpe.app/glyph_B0.png
+      192  11-12-2014 06:12   Payload/minecraftpe.app/common.json
+     4281  11-12-2014 06:12   Payload/minecraftpe.app/glyph_C6.png
+    13284  11-12-2014 06:12   Payload/minecraftpe.app/cow4.m4a
+   111871  11-12-2014 06:12   Payload/minecraftpe.app/wolf_hurt2.pcm
+     4115  11-12-2014 06:12   Payload/minecraftpe.app/glyph_B2.png
+   142796  11-12-2014 06:12   Payload/minecraftpe.app/skeletonhurt4.pcm
+     6900  11-12-2014 06:12   Payload/minecraftpe.app/sheep_14.png
+     3228  11-12-2014 06:12   Payload/minecraftpe.app/enderman_hit2.m4a
+    66654  11-12-2014 06:12   Payload/minecraftpe.app/pop.pcm
+     4956  11-12-2014 06:12   Payload/minecraftpe.app/ignite.m4a
+   189858  11-12-2014 06:12   Payload/minecraftpe.app/wolf_panting.pcm
+   179371  11-12-2014 06:12   Payload/minecraftpe.app/skeleton1.pcm
+   531039  11-12-2014 06:12   Payload/minecraftpe.app/wolf_growl1.pcm
+     3062  11-12-2014 06:12   Payload/minecraftpe.app/chicken.png
+    11137  11-12-2014 06:12   Payload/minecraftpe.app/Icon-57.png
+    19955  11-12-2014 06:12   Payload/minecraftpe.app/Icon-80.png
+      499  11-12-2014 06:12   Payload/minecraftpe.app/slime.png
+      250  11-12-2014 06:12   Payload/minecraftpe.app/texture_ccolor.fragment
+    94607  11-12-2014 06:12   Payload/minecraftpe.app/wolf_bark2.pcm
+     4844  11-12-2014 06:12   Payload/minecraftpe.app/glyph_0D.png
+    10641  11-12-2014 06:12   Payload/minecraftpe.app/glyph_63.png
+    10177  11-12-2014 06:12   Payload/minecraftpe.app/glyph_77.png
+     8593  11-12-2014 06:12   Payload/minecraftpe.app/CreateNewWorld_iphone.nib
+     3973  11-12-2014 06:12   Payload/minecraftpe.app/zpig3.m4a
+      342  11-12-2014 06:12   Payload/minecraftpe.app/bg32.png
+    10667  11-12-2014 06:12   Payload/minecraftpe.app/glyph_88.png
+   184629  11-12-2014 06:12   Payload/minecraftpe.app/villager_death.pcm
+    11102  11-12-2014 06:12   Payload/minecraftpe.app/glyph_89.png
+     8601  11-12-2014 06:12   Payload/minecraftpe.app/CreateNewWorld_ipad.nib
+     8951  11-12-2014 06:12   Payload/minecraftpe.app/zpig2.m4a
+      972  11-12-2014 06:12   Payload/minecraftpe.app/glyph_1A.png
+     9888  11-12-2014 06:12   Payload/minecraftpe.app/glyph_76.png
+     3850  11-12-2014 06:12   Payload/minecraftpe.app/creeper1.m4a
+     9845  11-12-2014 06:12   Payload/minecraftpe.app/glyph_62.png
+     5424  11-12-2014 06:12   Payload/minecraftpe.app/enderman_portal.m4a
+     2654  11-12-2014 06:12   Payload/minecraftpe.app/glyph_0E.png
+   109693  11-12-2014 06:12   Payload/minecraftpe.app/wolf_bark3.pcm
+      314  11-12-2014 06:12   Payload/minecraftpe.app/sky.vertex
+   116519  11-15-2014 12:18   Payload/minecraftpe.app/_CodeSignature/CodeResources
+   399055  11-12-2014 06:12   Payload/minecraftpe.app/zombiehurt1.pcm
+   110484  11-12-2014 06:12   Payload/minecraftpe.app/enderman_idle1.pcm
+     1817  11-12-2014 06:12   Payload/minecraftpe.app/ingame.images
+     3008  11-12-2014 06:12   Payload/minecraftpe.app/enderman_hit3.m4a
+     5715  11-12-2014 06:12   Payload/minecraftpe.app/sheep_15.png
+   121907  11-12-2014 06:12   Payload/minecraftpe.app/wood1.pcm
+     6917  11-12-2014 06:12   Payload/minecraftpe.app/fallbig1.m4a
+     1256  11-12-2014 06:12   Payload/minecraftpe.app/cow.png
+   292231  11-12-2014 06:12   Payload/minecraftpe.app/bowhit4.pcm
+   127389  11-12-2014 06:12   Payload/minecraftpe.app/wolf_hurt3.pcm
+     4269  11-12-2014 06:12   Payload/minecraftpe.app/glyph_B3.png
+     4407  11-12-2014 06:12   Payload/minecraftpe.app/glyph_C7.png
+    36479  11-12-2014 06:12   Payload/minecraftpe.app/Icon@2x.png
+      885  11-12-2014 06:12   Payload/minecraftpe.app/diamond_2.png
+     4520  11-12-2014 06:12   Payload/minecraftpe.app/glyph_C3.png
+     4239  11-12-2014 06:12   Payload/minecraftpe.app/glyph_B7.png
+    12274  11-12-2014 06:12   Payload/minecraftpe.app/cow1.m4a
+     1290  11-12-2014 06:12   Payload/minecraftpe.app/wolf_angry.png
+   135621  11-12-2014 06:12   Payload/minecraftpe.app/skeletonhurt1.pcm
+     7317  11-12-2014 06:12   Payload/minecraftpe.app/sheep_11.png
+   136657  11-12-2014 06:12   Payload/minecraftpe.app/iTunesArtwork
+   219474  11-12-2014 06:12   Payload/minecraftpe.app/enderman_idle5.pcm
+   242727  11-12-2014 06:12   Payload/minecraftpe.app/enderman_scream3.pcm
+     5139  11-12-2014 06:12   Payload/minecraftpe.app/stone2.m4a
+     3825  11-12-2014 06:12   Payload/minecraftpe.app/Icon-Small.png
+     2598  11-12-2014 06:12   Payload/minecraftpe.app/slime_small2.m4a
+   219902  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_say2.pcm
+     4633  11-12-2014 06:12   Payload/minecraftpe.app/zpighurt1.m4a
+     4070  11-12-2014 06:12   Payload/minecraftpe.app/glyph_0A.png
+     9969  11-12-2014 06:12   Payload/minecraftpe.app/glyph_66.png
+    10605  11-12-2014 06:12   Payload/minecraftpe.app/glyph_72.png
+     3724  11-12-2014 06:12   Payload/minecraftpe.app/glyph_1E.png
+    10686  11-12-2014 06:12   Payload/minecraftpe.app/glyph_99.png
+   166538  11-12-2014 06:12   Payload/minecraftpe.app/chickenhurt1.pcm
+     2796  11-12-2014 06:12   Payload/minecraftpe.app/villager_hit3.m4a
+     2718  11-12-2014 06:12   Payload/minecraftpe.app/villager_hit2.m4a
+    11137  11-12-2014 06:12   Payload/minecraftpe.app/Icon.png
+    10453  11-12-2014 06:12   Payload/minecraftpe.app/glyph_98.png
+   419628  11-12-2014 06:12   Payload/minecraftpe.app/sheep1.pcm
+   156586  11-12-2014 06:12   Payload/minecraftpe.app/splash.pcm
+     3967  11-12-2014 06:12   Payload/minecraftpe.app/creeper4.m4a
+     3683  11-12-2014 06:12   Payload/minecraftpe.app/glyph_1D.png
+    10363  11-12-2014 06:12   Payload/minecraftpe.app/glyph_73.png
+     9757  11-12-2014 06:12   Payload/minecraftpe.app/glyph_67.png
+     6734  11-12-2014 06:12   Payload/minecraftpe.app/glass1.m4a
+   102979  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_say3.pcm
+     2723  11-12-2014 06:12   Payload/minecraftpe.app/slime_small3.m4a
+     4574  11-12-2014 06:12   Payload/minecraftpe.app/stone3.m4a
+   286337  11-12-2014 06:12   Payload/minecraftpe.app/enderman_scream2.pcm
+      289  11-12-2014 06:12   Payload/minecraftpe.app/particles.material
+   274161  11-12-2014 06:12   Payload/minecraftpe.app/enderman_idle4.pcm
+    45803  11-12-2014 06:12   Payload/minecraftpe.app/en_US.lang
+      199  11-12-2014 06:12   Payload/minecraftpe.app/color.vertex
+   253042  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_kill.pcm
+     8436  11-12-2014 06:12   Payload/minecraftpe.app/hurt.m4a
+   141911  11-12-2014 06:12   Payload/minecraftpe.app/wood4.pcm
+      213  11-12-2014 06:12   Payload/minecraftpe.app/texture_cutout.fragment
+     7546  11-12-2014 06:12   Payload/minecraftpe.app/sheep_10.png
+     4413  11-12-2014 06:12   Payload/minecraftpe.app/glyph_B6.png
+     5188  11-12-2014 06:12   Payload/minecraftpe.app/cowhurt1.m4a
+   214270  11-12-2014 06:12   Payload/minecraftpe.app/bowhit1.pcm
+      136  11-12-2014 06:12   Payload/minecraftpe.app/fancy.material
+     4327  11-12-2014 06:12   Payload/minecraftpe.app/glyph_C2.png
+     8671  11-12-2014 06:12   Payload/minecraftpe.app/wolf_shake.m4a
+     4499  11-12-2014 06:12   Payload/minecraftpe.app/glyph_A8.png
+     5757  11-12-2014 06:12   Payload/minecraftpe.app/RenameMPWorld_iphone5.nib
+    34778  11-12-2014 06:12   Payload/minecraftpe.app/Default-568h@2x.png
+    12211  11-12-2014 06:12   Payload/minecraftpe.app/cow2.m4a
+   255078  11-12-2014 06:12   Payload/minecraftpe.app/bowhit3.pcm
+     5618  11-12-2014 06:12   Payload/minecraftpe.app/cowhurt3.m4a
+     4161  11-12-2014 06:12   Payload/minecraftpe.app/glyph_B4.png
+     4374  11-12-2014 06:12   Payload/minecraftpe.app/glyph_C0.png
+     1375  11-12-2014 06:12   Payload/minecraftpe.app/diamond_1.png
+      240  11-12-2014 06:12   Payload/minecraftpe.app/normal_as_color.vertex
+    36479  11-12-2014 06:12   Payload/minecraftpe.app/Icon-120.png
+   140431  11-12-2014 06:12   Payload/minecraftpe.app/skeletonhurt2.pcm
+     7129  11-12-2014 06:12   Payload/minecraftpe.app/sheep_12.png
+     2847  11-12-2014 06:12   Payload/minecraftpe.app/enderman_hit4.m4a
+      448  11-12-2014 06:12   Payload/minecraftpe.app/renderchunk.fragment
+    12223  11-12-2014 06:12   Payload/minecraftpe.app/fire_atlas.png
+     6071  11-12-2014 06:12   Payload/minecraftpe.app/stone1.m4a
+   107408  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_say1.pcm
+     2941  11-12-2014 06:12   Payload/minecraftpe.app/slime_small1.m4a
+     6214  11-12-2014 06:12   Payload/minecraftpe.app/glass3.m4a
+     4290  11-12-2014 06:12   Payload/minecraftpe.app/zpighurt2.m4a
+     9433  11-12-2014 06:12   Payload/minecraftpe.app/glyph_59.png
+    11036  11-12-2014 06:12   Payload/minecraftpe.app/glyph_71.png
+     2858  11-12-2014 06:12   Payload/minecraftpe.app/glyph_1F.png
+      862  11-12-2014 06:12   Payload/minecraftpe.app/entity.fragment
+     4277  11-12-2014 06:12   Payload/minecraftpe.app/glyph_0B.png
+    10475  11-12-2014 06:12   Payload/minecraftpe.app/glyph_65.png
+   111856  11-12-2014 06:12   Payload/minecraftpe.app/chickenhurt2.pcm
+   422959  11-12-2014 06:12   Payload/minecraftpe.app/sheep3.pcm
+     8236  11-12-2014 06:12   Payload/minecraftpe.app/enderman.tga
+     2878  11-12-2014 06:12   Payload/minecraftpe.app/villager_hit1.m4a
+   367769  11-12-2014 06:12   Payload/minecraftpe.app/sheep2.pcm
+    47907  11-12-2014 06:12   Payload/minecraftpe.app/Icon~ipad.png
+    11369  11-12-2014 06:12   Payload/minecraftpe.app/glyph_64.png
+     4540  11-12-2014 06:12   Payload/minecraftpe.app/glyph_0C.png
+    10832  11-12-2014 06:12   Payload/minecraftpe.app/glyph_70.png
+     6607  11-12-2014 06:12   Payload/minecraftpe.app/glass2.m4a
+    10453  11-12-2014 06:12   Payload/minecraftpe.app/glyph_58.png
+     5208  11-12-2014 06:12   Payload/minecraftpe.app/zpig4.m4a
+  8825008  10-04-2022 12:34   Payload/minecraftpe.app/minecraftpe
+     1280  11-12-2014 06:12   Payload/minecraftpe.app/sign.png
+     8986  11-12-2014 06:12   Payload/minecraftpe.app/Icon-50.png
+   283831  11-12-2014 06:12   Payload/minecraftpe.app/enderman_scream1.pcm
+     3954  11-12-2014 06:12   Payload/minecraftpe.app/chestclosed.m4a
+      645  11-12-2014 06:12   Payload/minecraftpe.app/terrain.material
+     5757  11-12-2014 06:12   Payload/minecraftpe.app/RenameMPWorld_iphone.nib
+     7267  11-12-2014 06:12   Payload/minecraftpe.app/sheep_13.png
+   135922  11-12-2014 06:12   Payload/minecraftpe.app/click.pcm
+   135506  11-12-2014 06:12   Payload/minecraftpe.app/skeletonhurt3.pcm
+      314  11-12-2014 06:12   Payload/minecraftpe.app/arrows.png
+     4458  11-12-2014 06:12   Payload/minecraftpe.app/glyph_C1.png
+     2755  11-12-2014 06:12   Payload/minecraftpe.app/chickenplop.m4a
+      370  11-12-2014 06:12   Payload/minecraftpe.app/background.png
+     4979  11-12-2014 06:12   Payload/minecraftpe.app/cowhurt2.m4a
+   212686  11-12-2014 06:12   Payload/minecraftpe.app/bowhit2.pcm
+    17044  11-12-2014 06:12   Payload/minecraftpe.app/cow3.m4a
+     4432  11-12-2014 06:12   Payload/minecraftpe.app/glyph_B5.png
+     1938  11-12-2014 06:12   Payload/minecraftpe.app/glyph_A9.png
+   526368  11-12-2014 06:12   Payload/minecraftpe.app/cow4.pcm
+     3472  11-12-2014 06:12   Payload/minecraftpe.app/wolf_hurt2.m4a
+     2540  11-12-2014 06:12   Payload/minecraftpe.app/wolf.png
+     4550  11-12-2014 06:12   Payload/minecraftpe.app/glyph_A4.png
+      382  11-12-2014 06:12   Payload/minecraftpe.app/archived-expanded-entitlements.xcent
+     4474  11-12-2014 06:12   Payload/minecraftpe.app/glyph_B8.png
+       89  11-12-2014 06:12   Payload/minecraftpe.app/current_color.fragment
+     4685  11-12-2014 06:12   Payload/minecraftpe.app/skeletonhurt4.m4a
+      898  11-12-2014 06:12   Payload/minecraftpe.app/chain_1.png
+     4385  11-12-2014 06:12   Payload/minecraftpe.app/snow1.m4a
+      806  11-12-2014 06:12   Payload/minecraftpe.app/gold_2.png
+     5628  11-12-2014 06:12   Payload/minecraftpe.app/skeleton1.m4a
+     4621  11-12-2014 06:12   Payload/minecraftpe.app/wolf_panting.m4a
+   105307  11-12-2014 06:12   Payload/minecraftpe.app/ignite.pcm
+     2095  11-12-2014 06:12   Payload/minecraftpe.app/pop.m4a
+   115284  11-12-2014 06:12   Payload/minecraftpe.app/enderman_hit2.pcm
+     8885  11-12-2014 06:12   Payload/minecraftpe.app/wolf_growl1.m4a
+     3093  11-12-2014 06:12   Payload/minecraftpe.app/wolf_bark2.m4a
+    11008  11-12-2014 06:12   Payload/minecraftpe.app/glyph_3B.png
+    10326  11-12-2014 06:12   Payload/minecraftpe.app/glyph_55.png
+    10048  11-12-2014 06:12   Payload/minecraftpe.app/glyph_41.png
+     7154  11-12-2014 06:12   Payload/minecraftpe.app/glyph_2F.png
+   159262  11-12-2014 06:12   Payload/minecraftpe.app/zpig3.pcm
+    11059  11-12-2014 06:12   Payload/minecraftpe.app/glyph_69.png
+     9996  11-12-2014 06:12   Payload/minecraftpe.app/glyph_96.png
+     8728  11-12-2014 06:12   Payload/minecraftpe.app/glyph_82.png
+    26643  11-12-2014 06:12   Payload/minecraftpe.app/default_world.png
+     2161  11-12-2014 06:12   Payload/minecraftpe.app/renderchunk.vertex
+     4170  11-12-2014 06:12   Payload/minecraftpe.app/villager_death.m4a
+     8633  11-12-2014 06:12   Payload/minecraftpe.app/glyph_83.png
+    10180  11-12-2014 06:12   Payload/minecraftpe.app/glyph_97.png
+   483564  11-12-2014 06:12   Payload/minecraftpe.app/zpig2.pcm
+    10540  11-12-2014 06:12   Payload/minecraftpe.app/glyph_68.png
+    10672  11-12-2014 06:12   Payload/minecraftpe.app/glyph_40.png
+   254141  11-12-2014 06:12   Payload/minecraftpe.app/enderman_portal.pcm
+   136643  11-12-2014 06:12   Payload/minecraftpe.app/creeper1.pcm
+     9313  11-12-2014 06:12   Payload/minecraftpe.app/glyph_54.png
+    10695  11-12-2014 06:12   Payload/minecraftpe.app/glyph_3C.png
+     3168  11-12-2014 06:12   Payload/minecraftpe.app/wolf_bark3.m4a
+      136  11-12-2014 06:12   Payload/minecraftpe.app/position.vertex
+     8379  11-12-2014 06:12   Payload/minecraftpe.app/zombiehurt1.m4a
+    51233  11-12-2014 06:12   Payload/minecraftpe.app/Icon@2x~ipad.png
+     3361  11-12-2014 06:12   Payload/minecraftpe.app/enderman_idle1.m4a
+      190  11-12-2014 06:12   Payload/minecraftpe.app/sad.json
+   119849  11-12-2014 06:12   Payload/minecraftpe.app/enderman_hit3.pcm
+     6502  11-12-2014 06:12   Payload/minecraftpe.app/wood1.m4a
+    19287  11-12-2014 06:12   Payload/minecraftpe.app/grass.png
+   226352  11-12-2014 06:12   Payload/minecraftpe.app/fallbig1.pcm
+     4318  11-12-2014 06:12   Payload/minecraftpe.app/glyph_B9.png
+     5650  11-12-2014 06:12   Payload/minecraftpe.app/glyph_A5.png
+     4553  11-12-2014 06:12   Payload/minecraftpe.app/glyph_FF.png
+     3612  11-12-2014 06:12   Payload/minecraftpe.app/wolf_hurt3.m4a
+    10067  11-12-2014 06:12   Payload/minecraftpe.app/bowhit4.m4a
+     2729  11-12-2014 06:12   Payload/minecraftpe.app/glyph_A7.png
+     3492  11-12-2014 06:12   Payload/minecraftpe.app/wolf_hurt1.m4a
+     4476  11-12-2014 06:12   Payload/minecraftpe.app/glyph_FD.png
+     5760  11-12-2014 06:12   Payload/minecraftpe.app/RenameMPWorld_ipad.nib
+      505  11-12-2014 06:12   Payload/minecraftpe.app/chain_2.png
+     4610  11-12-2014 06:12   Payload/minecraftpe.app/snow2.m4a
+     4915  11-12-2014 06:12   Payload/minecraftpe.app/watch-atlas.png
+     7158  11-12-2014 06:12   Payload/minecraftpe.app/wood3.m4a
+     1282  11-12-2014 06:12   Payload/minecraftpe.app/gold_1.png
+   134964  11-12-2014 06:12   Payload/minecraftpe.app/enderman_hit1.pcm
+     4692  11-12-2014 06:12   Payload/minecraftpe.app/skeleton2.m4a
+      537  11-12-2014 06:12   Payload/minecraftpe.app/cloud.vertex
+     6833  11-12-2014 06:12   Payload/minecraftpe.app/wolf_growl2.m4a
+     5171  11-12-2014 06:12   Payload/minecraftpe.app/enderman_idle3.m4a
+   809897  11-12-2014 06:12   Payload/minecraftpe.app/fuse.pcm
+   119066  11-12-2014 06:12   Payload/minecraftpe.app/stone4.pcm
+    18123  11-12-2014 06:12   Payload/minecraftpe.app/Icon-76.png
+     4942  11-12-2014 06:12   Payload/minecraftpe.app/door_open.m4a
+    70130  11-12-2014 06:12   Payload/minecraftpe.app/slime_small4.pcm
+     3389  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_say4.m4a
+     3077  11-12-2014 06:12   Payload/minecraftpe.app/wolf_bark1.m4a
+     1185  11-12-2014 06:12   Payload/minecraftpe.app/silverfish.png
+    10372  11-12-2014 06:12   Payload/minecraftpe.app/glyph_42.png
+     4267  11-12-2014 06:12   Payload/minecraftpe.app/glyph_2E.png
+    10732  11-12-2014 06:12   Payload/minecraftpe.app/glyph_3A.png
+     1805  11-12-2014 06:12   Payload/minecraftpe.app/double_normal.png
+    10608  11-12-2014 06:12   Payload/minecraftpe.app/glyph_56.png
+     4011  11-12-2014 06:12   Payload/minecraftpe.app/ladder4.m4a
+   134623  11-12-2014 06:12   Payload/minecraftpe.app/creeper3.pcm
+    10657  11-12-2014 06:12   Payload/minecraftpe.app/glyph_81.png
+     9065  11-12-2014 06:12   Payload/minecraftpe.app/glyph_95.png
+     3884  11-12-2014 06:12   Payload/minecraftpe.app/pigzombie.png
+    11042  11-12-2014 06:12   Payload/minecraftpe.app/glyph_94.png
+      200  11-12-2014 06:12   Payload/minecraftpe.app/texture.fragment
+    64807  11-12-2014 06:12   Payload/minecraftpe.app/villager_hit4.pcm
+     9976  11-12-2014 06:12   Payload/minecraftpe.app/glyph_80.png
+     1251  11-12-2014 06:12   Payload/minecraftpe.app/icons.png
+   390392  11-12-2014 06:12   Payload/minecraftpe.app/zpig1.pcm
+     9334  11-12-2014 06:12   Payload/minecraftpe.app/glyph_57.png
+   142683  11-12-2014 06:12   Payload/minecraftpe.app/creeper2.pcm
+     3945  11-12-2014 06:12   Payload/minecraftpe.app/glyph_2D.png
+    10653  11-12-2014 06:12   Payload/minecraftpe.app/glyph_43.png
+    50581  11-12-2014 06:12   Payload/minecraftpe.app/slime_small5.pcm
+     5458  11-12-2014 06:12   Payload/minecraftpe.app/enderman_scream4.m4a
+     2983  11-12-2014 06:12   Payload/minecraftpe.app/minecart.png
+     8315  11-12-2014 06:12   Payload/minecraftpe.app/zombiehurt2.m4a
+     4312  11-12-2014 06:12   Payload/minecraftpe.app/enderman_idle2.m4a
+     9339  11-12-2014 06:12   Payload/minecraftpe.app/wolf_growl3.m4a
+     5137  11-12-2014 06:12   Payload/minecraftpe.app/skeleton3.m4a
+     7460  11-12-2014 06:12   Payload/minecraftpe.app/wood2.m4a
+    86716  11-12-2014 06:12   Payload/minecraftpe.app/kz.png
+     4686  11-12-2014 06:12   Payload/minecraftpe.app/snow3.m4a
+   167995  11-12-2014 06:12   Payload/minecraftpe.app/fallbig2.pcm
+    22163  11-12-2014 06:12   Payload/minecraftpe.app/water.m4a
+     3001  11-12-2014 06:12   Payload/minecraftpe.app/glyph_FE.png
+     2970  11-12-2014 06:12   Payload/minecraftpe.app/glyph_A6.png
+     8594  11-12-2014 06:12   Payload/minecraftpe.app/CreateNewWorld_iphone5.nib
+   436520  11-12-2014 06:12   Payload/minecraftpe.app/wolf_shake.pcm
+     5997  11-12-2014 06:12   Payload/minecraftpe.app/glyph_A2.png
+     9226  11-12-2014 06:12   Payload/minecraftpe.app/glyph_FA.png
+     8290  11-12-2014 06:12   Payload/minecraftpe.app/bowhit3.m4a
+   154259  11-12-2014 06:12   Payload/minecraftpe.app/cowhurt3.pcm
+   403636  11-12-2014 06:12   Payload/minecraftpe.app/cow2.pcm
+     4639  11-12-2014 06:12   Payload/minecraftpe.app/skeletonhurt2.m4a
+    82304  11-12-2014 06:12   Payload/minecraftpe.app/enderman_hit4.pcm
+     1710  11-12-2014 06:12   Payload/minecraftpe.app/Info.plist
+   128439  11-12-2014 06:12   Payload/minecraftpe.app/stone1.pcm
+   100646  11-12-2014 06:12   Payload/minecraftpe.app/slime_small1.pcm
+     3170  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_say1.m4a
+   286200  11-12-2014 06:12   Payload/minecraftpe.app/glass3.pcm
+   172817  11-12-2014 06:12   Payload/minecraftpe.app/zpighurt2.pcm
+    10930  11-12-2014 06:12   Payload/minecraftpe.app/glyph_47.png
+     4025  11-12-2014 06:12   Payload/minecraftpe.app/ladder1.m4a
+    11231  11-12-2014 06:12   Payload/minecraftpe.app/glyph_3D.png
+     8640  11-12-2014 06:12   Payload/minecraftpe.app/glyph_53.png
+     8180  11-12-2014 06:12   Payload/minecraftpe.app/sheep3.m4a
+     4451  11-12-2014 06:12   Payload/minecraftpe.app/chickenhurt2.m4a
+     9333  11-12-2014 06:12   Payload/minecraftpe.app/glyph_84.png
+     9980  11-12-2014 06:12   Payload/minecraftpe.app/glyph_90.png
+    89954  11-12-2014 06:12   Payload/minecraftpe.app/villager_hit1.pcm
+    10630  11-12-2014 06:12   Payload/minecraftpe.app/glyph_91.png
+    10062  11-12-2014 06:12   Payload/minecraftpe.app/glyph_85.png
+     8445  11-12-2014 06:12   Payload/minecraftpe.app/sheep2.m4a
+     9741  11-12-2014 06:12   Payload/minecraftpe.app/glyph_52.png
+    10784  11-12-2014 06:12   Payload/minecraftpe.app/glyph_3E.png
+      913  11-12-2014 06:12   Payload/minecraftpe.app/ui3D.material
+     4545  11-12-2014 06:12   Payload/minecraftpe.app/glyph_2A.png
+    10709  11-12-2014 06:12   Payload/minecraftpe.app/glyph_46.png
+   241967  11-12-2014 06:12   Payload/minecraftpe.app/zpig4.pcm
+   289589  11-12-2014 06:12   Payload/minecraftpe.app/glass2.pcm
+    17676  11-12-2014 06:12   Payload/minecraftpe.app/minecraft.ttf
+    16687  11-12-2014 06:12   Payload/minecraftpe.app/Icon-72.png
+    33493  11-12-2014 06:12   Payload/minecraftpe.app/Icon~iphone.png
+   151552  11-12-2014 06:12   Payload/minecraftpe.app/chestclosed.pcm
+     5724  11-12-2014 06:12   Payload/minecraftpe.app/enderman_scream1.m4a
+    65536  11-12-2014 06:12   Payload/minecraftpe.app/glyph_sizes.bin
+     1335  11-12-2014 06:12   Payload/minecraftpe.app/zombie.png
+     4576  11-12-2014 06:12   Payload/minecraftpe.app/skeletonhurt3.m4a
+     4202  11-12-2014 06:12   Payload/minecraftpe.app/click.m4a
+   598692  11-12-2014 06:12   Payload/minecraftpe.app/cow3.pcm
+   137520  11-12-2014 06:12   Payload/minecraftpe.app/cowhurt2.pcm
+     6731  11-12-2014 06:12   Payload/minecraftpe.app/bowhit2.m4a
+    48887  11-12-2014 06:12   Payload/minecraftpe.app/chickenplop.pcm
+     6101  11-12-2014 06:12   Payload/minecraftpe.app/glyph_A3.png
+     4474  11-12-2014 06:12   Payload/minecraftpe.app/glyph_C9.png
+   415466  11-12-2014 06:12   Payload/minecraftpe.app/cow1.pcm
+     2821  11-12-2014 06:12   Payload/minecraftpe.app/glyph_FB.png
+     6131  11-12-2014 06:12   Payload/minecraftpe.app/glyph_A1.png
+    12230  11-12-2014 06:12   Payload/minecraftpe.app/items.meta
+     4431  11-12-2014 06:12   Payload/minecraftpe.app/snow4.m4a
+     4345  11-12-2014 06:12   Payload/minecraftpe.app/skeletonhurt1.m4a
+     5189  11-12-2014 06:12   Payload/minecraftpe.app/enderman_idle5.m4a
+    34770  11-12-2014 06:12   Payload/minecraftpe.app/Default-Landscape~ipad.png
+    11455  11-12-2014 06:12   Payload/minecraftpe.app/Icon-58.png
+     4913  11-12-2014 06:12   Payload/minecraftpe.app/enderman_scream3.m4a
+   128990  11-12-2014 06:12   Payload/minecraftpe.app/stone2.pcm
+     5091  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_say2.m4a
+    73670  11-12-2014 06:12   Payload/minecraftpe.app/slime_small2.pcm
+   189749  11-12-2014 06:12   Payload/minecraftpe.app/zpighurt1.pcm
+    10666  11-12-2014 06:12   Payload/minecraftpe.app/glyph_78.png
+    10579  11-12-2014 06:12   Payload/minecraftpe.app/glyph_50.png
+     4030  11-12-2014 06:12   Payload/minecraftpe.app/ladder2.m4a
+     9842  11-12-2014 06:12   Payload/minecraftpe.app/glyph_44.png
+     4586  11-12-2014 06:12   Payload/minecraftpe.app/glyph_2C.png
+     1446  11-12-2014 06:12   Payload/minecraftpe.app/normal.png
+     5819  11-12-2014 06:12   Payload/minecraftpe.app/chickenhurt1.m4a
+    11585  11-12-2014 06:12   Payload/minecraftpe.app/glyph_93.png
+    72933  11-12-2014 06:12   Payload/minecraftpe.app/villager_hit3.pcm
+    11346  11-12-2014 06:12   Payload/minecraftpe.app/glyph_87.png
+    10331  11-12-2014 06:12   Payload/minecraftpe.app/glyph_86.png
+    41731  11-12-2014 06:12   Payload/minecraftpe.app/foliage.png
+    10771  11-12-2014 06:12   Payload/minecraftpe.app/glyph_92.png
+    72352  11-12-2014 06:12   Payload/minecraftpe.app/villager_hit2.pcm
+     9275  11-12-2014 06:12   Payload/minecraftpe.app/sheep1.m4a
+     1846  11-12-2014 06:12   Payload/minecraftpe.app/glyph_2B.png
+    10669  11-12-2014 06:12   Payload/minecraftpe.app/glyph_45.png
+     9448  11-12-2014 06:12   Payload/minecraftpe.app/glyph_51.png
+    10517  11-12-2014 06:12   Payload/minecraftpe.app/glyph_3F.png
+   151792  11-12-2014 06:12   Payload/minecraftpe.app/creeper4.pcm
+     4251  11-12-2014 06:12   Payload/minecraftpe.app/ladder3.m4a
+     5516  11-12-2014 06:12   Payload/minecraftpe.app/splash.m4a
+   290628  11-12-2014 06:12   Payload/minecraftpe.app/glass1.pcm
+    10492  11-12-2014 06:12   Payload/minecraftpe.app/glyph_79.png
+    70418  11-12-2014 06:12   Payload/minecraftpe.app/slime_small3.pcm
+     3241  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_say3.m4a
+     1268  11-12-2014 06:12   Payload/minecraftpe.app/mooshroom.png
+   127670  11-12-2014 06:12   Payload/minecraftpe.app/stone3.pcm
+     5716  11-12-2014 06:12   Payload/minecraftpe.app/enderman_scream2.m4a
+     6100  11-12-2014 06:12   Payload/minecraftpe.app/enderman_idle4.m4a
+   409612  11-12-2014 06:12   Payload/minecraftpe.app/hurt.pcm
+     5598  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_kill.m4a
+     7633  11-12-2014 06:12   Payload/minecraftpe.app/wood4.m4a
+    33493  11-12-2014 06:12   Payload/minecraftpe.app/Icon-114.png
+    27713  11-12-2014 06:12   Payload/minecraftpe.app/Icon-100.png
+     5845  11-12-2014 06:12   Payload/minecraftpe.app/glyph_A0.png
+   137534  11-12-2014 06:12   Payload/minecraftpe.app/cowhurt1.pcm
+     7353  11-12-2014 06:12   Payload/minecraftpe.app/bowhit1.m4a
+     4005  11-12-2014 06:12   Payload/minecraftpe.app/glyph_FC.png
+     4516  11-12-2014 06:12   Payload/minecraftpe.app/glyph_C8.png
+     7678  11-12-2014 06:12   Payload/minecraftpe.app/sheep_0.png
+    89981  11-12-2014 06:12   Payload/minecraftpe.app/sand4.pcm
+     3654  11-12-2014 06:12   Payload/minecraftpe.app/enderman_portal2.m4a
+   472915  11-12-2014 06:12   Payload/minecraftpe.app/enderman_death.pcm
+     4152  11-12-2014 06:12   Payload/minecraftpe.app/spider4.m4a
+   145633  11-12-2014 06:12   Payload/minecraftpe.app/chicken3.pcm
+     4330  11-12-2014 06:12   Payload/minecraftpe.app/touchgui2.png
+     4236  11-12-2014 06:12   Payload/minecraftpe.app/door_close.m4a
+     3964  11-12-2014 06:12   Payload/minecraftpe.app/char.png
+   122820  11-12-2014 06:12   Payload/minecraftpe.app/gravel3.pcm
+    32786  11-12-2014 06:12   Payload/minecraftpe.app/terrain-atlas_mip1.tga
+    12466  11-12-2014 06:12   Payload/minecraftpe.app/zombie2.m4a
+    10567  11-12-2014 06:12   Payload/minecraftpe.app/glyph_36.png
+    10929  11-12-2014 06:12   Payload/minecraftpe.app/glyph_5A.png
+     1460  11-12-2014 06:12   Payload/minecraftpe.app/farmer.png
+     7841  11-12-2014 06:12   Payload/minecraftpe.app/glyph_4E.png
+     3389  11-12-2014 06:12   Payload/minecraftpe.app/glyph_22.png
+      587  11-12-2014 06:12   Payload/minecraftpe.app/sky.material
+    10323  11-12-2014 06:12   Payload/minecraftpe.app/glyph_9B.png
+     9775  11-12-2014 06:12   Payload/minecraftpe.app/glyph_8F.png
+    87342  11-12-2014 06:12   Payload/minecraftpe.app/panorama_0.png
+      945  11-12-2014 06:12   Payload/minecraftpe.app/compass.png
+   105638  11-12-2014 06:12   Payload/minecraftpe.app/panorama_1.png
+    58908  11-12-2014 06:12   Payload/minecraftpe.app/cloth4.pcm
+    10978  11-12-2014 06:12   Payload/minecraftpe.app/glyph_9C.png
+     4127  11-12-2014 06:12   Payload/minecraftpe.app/glyph_23.png
+     8675  11-12-2014 06:12   Payload/minecraftpe.app/glyph_4D.png
+     9554  11-12-2014 06:12   Payload/minecraftpe.app/zpigdeath.m4a
+    10123  11-12-2014 06:12   Payload/minecraftpe.app/glyph_37.png
+   193158  11-12-2014 06:12   Payload/minecraftpe.app/villager_idle1.pcm
+   131090  11-12-2014 06:12   Payload/minecraftpe.app/terrain-atlas_mip0.tga
+    17615  11-12-2014 06:12   Payload/minecraftpe.app/zombie3.m4a
+   131005  11-12-2014 06:12   Payload/minecraftpe.app/gravel2.pcm
+       89  11-12-2014 06:12   Payload/minecraftpe.app/uv_as_color.fragment
+       56  11-12-2014 06:12   Payload/minecraftpe.app/flat_white.fragment
+     8986  11-12-2014 06:12   Payload/minecraftpe.app/Icon-Small-50.png
+   213520  11-12-2014 06:12   Payload/minecraftpe.app/chicken2.pcm
+   136053  11-12-2014 06:12   Payload/minecraftpe.app/grass1.pcm
+   164372  11-12-2014 06:12   Payload/minecraftpe.app/skeletondeath.pcm
+     2362  11-12-2014 06:12   Payload/minecraftpe.app/glyph_AA.png
+     7460  11-12-2014 06:12   Payload/minecraftpe.app/sheep_1.png
+     4413  11-12-2014 06:12   Payload/minecraftpe.app/glyph_AC.png
+     7698  11-12-2014 06:12   Payload/minecraftpe.app/sheep_3.png
+      774  11-12-2014 06:12   Payload/minecraftpe.app/magmacube.png
+   135384  11-12-2014 06:12   Payload/minecraftpe.app/grass3.pcm
+      704  11-12-2014 06:12   Payload/minecraftpe.app/sun.png
+   493072  11-12-2014 06:12   Payload/minecraftpe.app/zpigangry4.pcm
+     3046  11-12-2014 06:12   Payload/minecraftpe.app/creeper.png
+     3825  11-12-2014 06:12   Payload/minecraftpe.app/Icon-29.png
+   138624  11-12-2014 06:12   Payload/minecraftpe.app/villager_idle3.pcm
+    13484  11-12-2014 06:12   Payload/minecraftpe.app/zombie1.m4a
+     8210  11-12-2014 06:12   Payload/minecraftpe.app/terrain-atlas_mip2.tga
+     9717  11-12-2014 06:12   Payload/minecraftpe.app/glyph_4F.png
+     4252  11-12-2014 06:12   Payload/minecraftpe.app/glyph_21.png
+    10229  11-12-2014 06:12   Payload/minecraftpe.app/glyph_35.png
+     9567  11-12-2014 06:12   Payload/minecraftpe.app/glyph_5B.png
+    16994  11-12-2014 06:12   Payload/minecraftpe.app/terrain.meta
+        8  11-12-2014 06:12   Payload/minecraftpe.app/PkgInfo
+     5949  11-12-2014 06:12   Payload/minecraftpe.app/glyph_09.png
+    10986  11-12-2014 06:12   Payload/minecraftpe.app/glyph_8E.png
+    10536  11-12-2014 06:12   Payload/minecraftpe.app/glyph_9A.png
+   104350  11-12-2014 06:12   Payload/minecraftpe.app/panorama_3.png
+    97144  11-12-2014 06:12   Payload/minecraftpe.app/panorama_2.png
+    10248  11-12-2014 06:12   Payload/minecraftpe.app/glyph_8D.png
+     1446  11-12-2014 06:12   Payload/minecraftpe.app/ui.material
+      264  11-12-2014 06:12   Payload/minecraftpe.app/color_uv.vertex
+     9240  11-12-2014 06:12   Payload/minecraftpe.app/glyph_5C.png
+     9978  11-12-2014 06:12   Payload/minecraftpe.app/glyph_34.png
+     3842  11-12-2014 06:12   Payload/minecraftpe.app/glyph_20.png
+      811  11-12-2014 06:12   Payload/minecraftpe.app/skeleton.png
+   147428  11-12-2014 06:12   Payload/minecraftpe.app/fallsmall.pcm
+     2066  11-12-2014 06:12   Payload/minecraftpe.app/terrain-atlas_mip3.tga
+   279709  11-12-2014 06:12   Payload/minecraftpe.app/villager_idle2.pcm
+   121487  11-12-2014 06:12   Payload/minecraftpe.app/gravel1.pcm
+    16992  11-12-2014 06:12   Payload/minecraftpe.app/touchgui.png
+     5204  11-12-2014 06:12   Payload/minecraftpe.app/wolf_whine.m4a
+     4755  11-12-2014 06:12   Payload/minecraftpe.app/slime_big4.m4a
+   157934  11-12-2014 06:12   Payload/minecraftpe.app/pigdeath.pcm
+   141737  11-12-2014 06:12   Payload/minecraftpe.app/grass2.pcm
+   162245  11-12-2014 06:12   Payload/minecraftpe.app/chicken1.pcm
+    96405  11-12-2014 06:12   Payload/minecraftpe.app/burp.pcm
+     7710  11-12-2014 06:12   Payload/minecraftpe.app/sheep_2.png
+   527823  11-12-2014 06:12   Payload/minecraftpe.app/fire.pcm
+     1223  11-12-2014 06:12   Payload/minecraftpe.app/glyph_AB.png
+    90360  11-12-2014 06:12   Payload/minecraftpe.app/sand2.pcm
+     4395  11-12-2014 06:12   Payload/minecraftpe.app/glyph_AF.png
+    11137  11-12-2014 06:12   Payload/minecraftpe.app/Icon 2.png
+     7774  11-12-2014 06:12   Payload/minecraftpe.app/sheep_6.png
+     4558  11-12-2014 06:12   Payload/minecraftpe.app/spider2.m4a
+   163268  11-12-2014 06:12   Payload/minecraftpe.app/pig2.pcm
+     7638  11-12-2014 06:12   Payload/minecraftpe.app/spiderdeath.m4a
+   373443  11-12-2014 06:12   Payload/minecraftpe.app/zpigangry1.pcm
+     4024  11-12-2014 06:12   Payload/minecraftpe.app/pig.png
+    82976  11-12-2014 06:12   Payload/minecraftpe.app/eat3.pcm
+    34101  11-12-2014 06:12   Payload/minecraftpe.app/Default@2x.png
+      243  11-12-2014 06:12   Payload/minecraftpe.app/fancy.json
+     2028  11-12-2014 06:12   Payload/minecraftpe.app/moon_phases.png
+     3389  11-12-2014 06:12   Payload/minecraftpe.app/glyph_18.png
+   347829  11-12-2014 06:12   Payload/minecraftpe.app/creeperdeath.pcm
+    10868  11-12-2014 06:12   Payload/minecraftpe.app/glyph_4C.png
+     4874  11-12-2014 06:12   Payload/minecraftpe.app/glyph_24.png
+     6091  11-12-2014 06:12   Payload/minecraftpe.app/glyph_30.png
+      210  11-12-2014 06:12   Payload/minecraftpe.app/iteminhand.fragment
+    10762  11-12-2014 06:12   Payload/minecraftpe.app/glyph_9D.png
+    59190  11-12-2014 06:12   Payload/minecraftpe.app/cloth3.pcm
+    59636  11-12-2014 06:12   Payload/minecraftpe.app/cloth2.pcm
+    10894  11-12-2014 06:12   Payload/minecraftpe.app/glyph_9E.png
+     9941  11-12-2014 06:12   Payload/minecraftpe.app/glyph_8A.png
+     9720  11-12-2014 06:12   Payload/minecraftpe.app/glyph_5F.png
+     5340  11-12-2014 06:12   Payload/minecraftpe.app/glyph_31.png
+     2661  11-12-2014 06:12   Payload/minecraftpe.app/glyph_25.png
+    10777  11-12-2014 06:12   Payload/minecraftpe.app/glyph_4B.png
+     4453  11-12-2014 06:12   Payload/minecraftpe.app/glyph_19.png
+   125444  11-12-2014 06:12   Payload/minecraftpe.app/gravel4.pcm
+    81975  11-12-2014 06:12   Payload/minecraftpe.app/eat2.pcm
+     3664  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_hit1.m4a
+     4957  11-12-2014 06:12   Payload/minecraftpe.app/slime_big1.m4a
+   103440  11-12-2014 06:12   Payload/minecraftpe.app/pig3.pcm
+     5002  11-12-2014 06:12   Payload/minecraftpe.app/spider3.m4a
+     6472  11-12-2014 06:12   Payload/minecraftpe.app/sheep_7.png
+    90394  11-12-2014 06:12   Payload/minecraftpe.app/sand3.pcm
+     4243  11-12-2014 06:12   Payload/minecraftpe.app/chestopen.m4a
+   204871  11-12-2014 06:12   Payload/minecraftpe.app/wolf_death.pcm
+   120730  11-12-2014 06:12   Payload/minecraftpe.app/bow.pcm
+    90681  11-12-2014 06:12   Payload/minecraftpe.app/sand1.pcm
+     7223  11-12-2014 06:12   Payload/minecraftpe.app/sheep_5.png
+     4290  11-12-2014 06:12   Payload/minecraftpe.app/glyph_AE.png
+     6109  11-12-2014 06:12   Payload/minecraftpe.app/spider1.m4a
+    98011  11-12-2014 06:12   Payload/minecraftpe.app/pig1.pcm
+     3573  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_hit3.m4a
+  4336453  11-12-2014 06:12   Payload/minecraftpe.app/enderman_stare.pcm
+   319162  11-12-2014 06:12   Payload/minecraftpe.app/zombiedeath.pcm
+   152585  11-12-2014 06:12   Payload/minecraftpe.app/zpigangry2.pcm
+     4445  11-12-2014 06:12   Payload/minecraftpe.app/slime_big3.m4a
+     1617  11-12-2014 06:12   Payload/minecraftpe.app/villager.png
+      319  11-12-2014 06:12   Payload/minecraftpe.app/saddle.png
+     7840  11-12-2014 06:12   Payload/minecraftpe.app/glyph_33.png
+    10498  11-12-2014 06:12   Payload/minecraftpe.app/glyph_5D.png
+     5938  11-12-2014 06:12   Payload/minecraftpe.app/glyph_27.png
+   108665  11-12-2014 06:12   Payload/minecraftpe.app/panorama_5.png
+    10618  11-12-2014 06:12   Payload/minecraftpe.app/glyph_8C.png
+    10504  11-12-2014 06:12   Payload/minecraftpe.app/glyph_8B.png
+    58707  11-12-2014 06:12   Payload/minecraftpe.app/cloth1.pcm
+     8296  11-12-2014 06:12   Payload/minecraftpe.app/glyph_9F.png
+     7463  11-12-2014 06:12   Payload/minecraftpe.app/panorama_4.png
+     4620  11-12-2014 06:12   Payload/minecraftpe.app/glyph_26.png
+    10486  11-12-2014 06:12   Payload/minecraftpe.app/glyph_4A.png
+     1447  11-12-2014 06:12   Payload/minecraftpe.app/entity.vertex
+     9497  11-12-2014 06:12   Payload/minecraftpe.app/glyph_5E.png
+     6464  11-12-2014 06:12   Payload/minecraftpe.app/glyph_32.png
+     4108  11-12-2014 06:12   Payload/minecraftpe.app/break.m4a
+   261303  11-12-2014 06:12   Payload/minecraftpe.app/explode.pcm
+    82068  11-12-2014 06:12   Payload/minecraftpe.app/eat1.pcm
+    11802  11-12-2014 06:12   Payload/minecraftpe.app/spritesheet.png
+   435848  11-12-2014 06:12   Payload/minecraftpe.app/zpigangry3.pcm
+     3931  11-12-2014 06:12   Payload/minecraftpe.app/slime_big2.m4a
+     3425  11-12-2014 06:12   Payload/minecraftpe.app/silverfish_hit2.m4a
+   139566  11-12-2014 06:12   Payload/minecraftpe.app/grass4.pcm
+     4227  11-12-2014 06:12   Payload/minecraftpe.app/glyph_AD.png
+     7351  11-12-2014 06:12   Payload/minecraftpe.app/sheep_4.png
+ ~/Desktop/MC170-Inspection %
